@@ -37,16 +37,15 @@ gulp.task('sass', function () {
 gulp.task('browser-sync', function () {
     browserSync({
         server: {
-            baseDir: dir,
+            baseDir: dir
 
             //for all directory view
-            //directory: true 
+            //,directory: true 
 
             //for custom index
-            // index: 'somefilename.html' 
+            // ,index: 'somefilename.html' 
 
         },
-
 
         notify: false
     });
@@ -67,7 +66,6 @@ gulp.task('img', function () {
         .pipe(gulp.dest(img_patch)); // Выгружаем новые картинки
 });
 
-
 //Watch
 
 gulp.task('watch', ['browser-sync', 'sass', 'img'], function () {
@@ -77,7 +75,6 @@ gulp.task('watch', ['browser-sync', 'sass', 'img'], function () {
     gulp.watch(dir + '*.html', browserSync.reload);
     gulp.watch(pre_img_patch + '**/*', ['img']);
 });
-
 
 //Build
 
@@ -97,9 +94,7 @@ gulp.task('build', ['clean', 'img', 'html'], function () {
 
     gulp.src('app/fonts/**/*')
         .pipe(gulp.dest(build + '/fonts'));
-
     gulp.src('app/images/**/*')
         .pipe(gulp.dest(build + '/images'));
-
 });
 
