@@ -9,6 +9,9 @@ var cssnano = require('gulp-cssnano');
 var imagemin = require('gulp-imagemin');
 var pngquant = require('imagemin-pngquant');
 var del = require('del');
+var useref = require('gulp-useref');
+var uglify = require('gulp-uglify');
+var gulpif = require('gulp-if');
 
 //Patchs
 
@@ -26,7 +29,6 @@ gulp.task('sass', function () {
     return gulp.src(scss_patch + 'style.scss')
         .pipe(sass().on('error', sass.logError))
         .pipe(autoprefixer(['last 25 versions', '> 1%', 'ie 8', 'ie 7'], { cascade: true }))
-        .pipe(cssnano())
         .pipe(gulp.dest(css_patch));
 });
 
@@ -73,5 +75,29 @@ gulp.task('watch', ['browser-sync', 'sass', 'img'], function() {
     gulp.watch(js_patch + '*.js', browserSync.reload);
     gulp.watch(dir + '*.html', browserSync.reload);
     gulp.watch(pre_img_patch + '**/*', ['img']);
+});
+
+
+gulp.task('html', ['sass'], function () {
+    return gulp.src('app/*.html')
+        .pipe(useref())
+        .pipe(gulpif('*.js', uglify()))
+        .pipe(gulpif('*.css', cssnano()))
+        .pipe(gulp.dest('dist'));
+});
+
+gulp.task('clean', function() {
+    return del.sync('dist'); // Удаляем папку dist перед сборкой
+});
+
+gulp.task('build', ['clean', 'img', 'html'], function() {
+
+    var buildFonts = gulp.src('app/fonts/**/*') 
+        .pipe(gulp.dest('dist/fonts'));
+
+    var buildImg = gulp.src('app/images/**/*')
+        .pipe(gulp.dest('dist/images'));
+
+
 });
 
