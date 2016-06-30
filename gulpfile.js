@@ -79,6 +79,8 @@ gulp.task('watch', ['browser-sync', 'sass', 'img'], function () {
 });
 
 
+//Build
+
 gulp.task('html', ['sass'], function () {
     return gulp.src('app/*.html')
         .pipe(useref())
