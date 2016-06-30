@@ -17,9 +17,9 @@ var gulpif = require('gulp-if');
 
 var dir = 'app/';
 var build = 'dist';
-var scss_patch = dir +'scss/';
-var css_patch = dir +'css/';
-var js_patch = dir +'js/';
+var scss_patch = dir + 'scss/';
+var css_patch = dir + 'css/';
+var js_patch = dir + 'js/';
 var pre_img_patch = dir + 'img_src/';
 var img_patch = dir + 'images/';
 
@@ -29,32 +29,32 @@ var img_patch = dir + 'images/';
 gulp.task('sass', function () {
     return gulp.src(scss_patch + 'style.scss')
         .pipe(sass().on('error', sass.logError))
-        .pipe(autoprefixer(['last 25 versions', '> 1%', 'ie 8', 'ie 7'], { cascade: true }))
+        .pipe(autoprefixer(['last 25 versions', '> 1%', 'ie 8', 'ie 7'], {cascade: true}))
         .pipe(gulp.dest(css_patch));
 });
 
 //Browser sync
-gulp.task('browser-sync', function() {
+gulp.task('browser-sync', function () {
     browserSync({
         server: {
             baseDir: dir,
-            
+
             //for all directory view
             //directory: true 
-            
+
             //for custom index
             // index: 'somefilename.html' 
 
         },
 
-        
+
         notify: false
     });
 });
 
 //images
 
-gulp.task('img', function() {
+gulp.task('img', function () {
     return gulp.src(pre_img_patch + '**/*')
 
         .pipe(imagemin({ // Сжимаем новые с наилучшими настройками
@@ -70,7 +70,7 @@ gulp.task('img', function() {
 
 //Watch
 
-gulp.task('watch', ['browser-sync', 'sass', 'img'], function() {
+gulp.task('watch', ['browser-sync', 'sass', 'img'], function () {
     gulp.watch(scss_patch + '*.scss', ['sass']);
     gulp.watch(css_patch + '*.css', browserSync.reload);
     gulp.watch(js_patch + '*.js', browserSync.reload);
@@ -87,17 +87,17 @@ gulp.task('html', ['sass'], function () {
         .pipe(gulp.dest(build));
 });
 
-gulp.task('clean', function() {
+gulp.task('clean', function () {
     return del.sync(build); // Удаляем папку dist перед сборкой
 });
 
-gulp.task('build', ['clean', 'img', 'html'], function() {
+gulp.task('build', ['clean', 'img', 'html'], function () {
 
-    var buildFonts = gulp.src('app/fonts/**/*') 
+    gulp.src('app/fonts/**/*')
         .pipe(gulp.dest(build + '/fonts'));
 
-    var buildImg = gulp.src('app/images/**/*')
-        .pipe(gulp.dest( build + '/images'));
+    gulp.src('app/images/**/*')
+        .pipe(gulp.dest(build + '/images'));
 
 });
 
