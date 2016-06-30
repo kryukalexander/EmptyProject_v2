@@ -16,6 +16,7 @@ var gulpif = require('gulp-if');
 //Patchs
 
 var dir = 'app/';
+var build = 'dist';
 var scss_patch = dir +'scss/';
 var css_patch = dir +'css/';
 var js_patch = dir +'js/';
@@ -83,21 +84,20 @@ gulp.task('html', ['sass'], function () {
         .pipe(useref())
         .pipe(gulpif('*.js', uglify()))
         .pipe(gulpif('*.css', cssnano()))
-        .pipe(gulp.dest('dist'));
+        .pipe(gulp.dest(build));
 });
 
 gulp.task('clean', function() {
-    return del.sync('dist'); // Удаляем папку dist перед сборкой
+    return del.sync(build); // Удаляем папку dist перед сборкой
 });
 
 gulp.task('build', ['clean', 'img', 'html'], function() {
 
     var buildFonts = gulp.src('app/fonts/**/*') 
-        .pipe(gulp.dest('dist/fonts'));
+        .pipe(gulp.dest(build + '/fonts'));
 
     var buildImg = gulp.src('app/images/**/*')
-        .pipe(gulp.dest('dist/images'));
-
+        .pipe(gulp.dest( build + '/images'));
 
 });
 
