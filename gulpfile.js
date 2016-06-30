@@ -37,16 +37,15 @@ gulp.task('sass', function () {
 gulp.task('browser-sync', function () {
     browserSync({
         server: {
-            baseDir: dir,
+            baseDir: dir
 
             //for all directory view
-            //directory: true 
+            //,directory: true 
 
             //for custom index
-            // index: 'somefilename.html' 
+            // ,index: 'somefilename.html' 
 
         },
-
 
         notify: false
     });
