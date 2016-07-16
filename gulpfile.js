@@ -54,16 +54,16 @@ gulp.task('browser-sync', function () {
 //images
 
 gulp.task('img', function () {
-    return gulp.src(pre_img_patch + '**/*')
+    return gulp.src(img_patch + '**/*')
 
-        .pipe(imagemin({ // Сжимаем новые с наилучшими настройками
+        .pipe(imagemin({ 
             interlaced: true,
             progressive: true,
             svgoPlugins: [{removeViewBox: false}],
             use: [pngquant()]
         }))
 
-        .pipe(gulp.dest(img_patch)); // Выгружаем новые картинки
+        .pipe(gulp.dest(build + '/images')); 
 });
 
 //Watch
@@ -73,7 +73,7 @@ gulp.task('watch', ['browser-sync', 'sass', 'img'], function () {
     gulp.watch(css_patch + '*.css', browserSync.reload);
     gulp.watch(js_patch + '*.js', browserSync.reload);
     gulp.watch(dir + '*.html', browserSync.reload);
-    gulp.watch(pre_img_patch + '**/*', ['img']);
+//    gulp.watch(pre_img_patch + '**/*', ['img']);
 });
 
 //Build
@@ -94,7 +94,7 @@ gulp.task('build', ['clean', 'img', 'html'], function () {
 
     gulp.src('app/fonts/**/*')
         .pipe(gulp.dest(build + '/fonts'));
-    gulp.src('app/images/**/*')
-        .pipe(gulp.dest(build + '/images'));
+//    gulp.src('app/images/**/*')
+//        .pipe(gulp.dest(build + '/images'));
 });
 
