@@ -12,6 +12,9 @@ var del = require('del');
 var useref = require('gulp-useref');
 var uglify = require('gulp-uglify');
 var gulpif = require('gulp-if');
+var svgstore = require('gulp-svgstore');
+var rename = require("gulp-rename");
+var cheerio = require('gulp-cheerio');
 
 //Patchs
 
@@ -22,6 +25,8 @@ var css_patch = dir + 'css/';
 var js_patch = dir + 'js/';
 var pre_img_patch = dir + 'img_src/';
 var img_patch = dir + 'images/';
+var svg_patch = dir + 'svg/';
+
 
 //Tasks
 
@@ -68,7 +73,7 @@ gulp.task('img', function () {
 
 //Watch
 
-gulp.task('watch', ['browser-sync', 'sass', 'img'], function () {
+gulp.task('watch', ['browser-sync', 'sass'], function () {
     gulp.watch(scss_patch + '*.scss', ['sass']);
     gulp.watch(css_patch + '*.css', browserSync.reload);
     gulp.watch(js_patch + '*.js', browserSync.reload);
@@ -96,5 +101,19 @@ gulp.task('build', ['clean', 'img', 'html'], function () {
         .pipe(gulp.dest(build + '/fonts'));
 //    gulp.src('app/images/**/*')
 //        .pipe(gulp.dest(build + '/images'));
+});
+
+gulp.task('svgstore', function () {
+    return gulp.src(svg_patch + 'icon/**/*.svg')
+        .pipe(rename({prefix: 'icon-'}))
+        .pipe(cheerio({
+            run: function ($) {
+                $('[fill]').removeAttr('fill');
+                $('[style]').removeAttr('style');
+            },
+            parserOptions: { xmlMode: true }
+        }))
+        .pipe(svgstore({ inlineSvg: true }))
+        .pipe(gulp.dest(svg_patch));
 });
 
