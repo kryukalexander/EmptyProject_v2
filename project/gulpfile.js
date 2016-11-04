@@ -78,7 +78,6 @@ gulp.task('watch', ['browser-sync', 'sass'], function () {
     gulp.watch(css_patch + '*.css', browserSync.reload);
     gulp.watch(js_patch + '*.js', browserSync.reload);
     gulp.watch(dir + '*.html', browserSync.reload);
-//    gulp.watch(pre_img_patch + '**/*', ['img']);
 });
 
 //Build
@@ -92,15 +91,13 @@ gulp.task('html', ['sass'], function () {
 });
 
 gulp.task('clean', function () {
-    return del.sync(build); // Удаляем папку dist перед сборкой
+    return del.sync(build);
 });
 
 gulp.task('build', ['clean', 'img', 'html'], function () {
 
     gulp.src('app/fonts/**/*')
         .pipe(gulp.dest(build + '/fonts'));
-//    gulp.src('app/images/**/*')
-//        .pipe(gulp.dest(build + '/images'));
 });
 
 gulp.task('svgstore', function () {
