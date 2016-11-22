@@ -1,0 +1,55 @@
+@import "vars";
+
+//Grid mixins
+@mixin createColumns ($prefix, $br-min) {
+
+    @media all and (min-width: $br-min) {
+        @for $i from 1 through $columns {
+
+            &.col-#{$prefix}-#{$i} {
+                flex-basis: calc( (100%/#{($columns / $i)}) - #{$gutter} );
+            }
+
+            &.col-offset-#{$prefix}-#{$i} {
+                margin-left: calc( (100%/#{($columns / $i)}) + #{$gutter / 2});
+            }
+
+        }
+
+        &.col-#{$prefix}-auto {
+            margin: 0 auto;
+        }
+    }
+}
+
+@mixin makeGrid {
+    @each $key, $value in $viewports {
+        @include createColumns ($key, $value);
+    }
+}
+
+//Buttons mixins
+
+@mixin buttonState($border, $fill, $text) {
+    border-color: $border;
+    background-color: $fill;
+    color: $text;
+    transition-duration: .25s;
+}
+
+@mixin Button ($border, $fill, $text) {
+    @include buttonState ($border, $fill, $text);
+    &:hover {
+        @if ($border==$text) {
+            @if ($fill==transparent) {
+                @include buttonState ($border, $border, white)
+            }
+            @else {
+                @include buttonState ($border, $border, $fill)
+            }
+        }
+        @else {
+            @include buttonState ( darken($border, 10%), darken($fill, 10%), $text)
+        }
+    }
+}

@@ -1,0 +1,16 @@
+//Grid
+$gutter: 30px;
+$columns: 12;
+$viewports: ( xs: 0, sm: 768px, md: 1024px, lg: 1200px, xl: 1440px );
+
+//Buttons
+$button-lh: 1.25;
+$button-font: 16px;
+$button-font-small: $button-font - 4px;
+$button-font-large: $button-font + 4px;
+$button-border: 2px;
+$button-border-radius: 5px;
+$button-padding: 0.5em;
+$button-text-align: center;
+$button-text-transform: uppercase;
+$button-font-weight: 400;
