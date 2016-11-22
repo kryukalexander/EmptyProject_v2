@@ -1,7 +1,9 @@
-body {
-    color: gray;
+@import "grids";
+
+* {
+    box-sizing: border-box;
 }
 
-p {
-    font-size: 16px;
+html, body {
+    font-family: sans-serif;
 }
