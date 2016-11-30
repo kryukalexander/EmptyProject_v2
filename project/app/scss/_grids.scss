@@ -18,6 +18,20 @@
     margin: 0 $gutter/-2;
     flex-direction: row;
     flex-wrap: wrap;
+
+    &.centered {
+        justify-content: center;
+        .col{
+            margin: 0 $gutter/2;
+        }
+    }
+
+    &.to-right {
+        justify-content: flex-end;
+        .col {
+            margin: 0 $gutter/2;
+        }
+    }
 }
 
 .col {

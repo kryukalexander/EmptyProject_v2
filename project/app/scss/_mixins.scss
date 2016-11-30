@@ -19,6 +19,11 @@
         &.col-#{$prefix}-auto {
             margin: 0 auto;
         }
+
+
+        &.col-#{$prefix}-right {
+            margin-left: auto;
+        }
     }
 }
 
