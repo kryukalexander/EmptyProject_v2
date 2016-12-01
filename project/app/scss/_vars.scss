@@ -1,7 +1,22 @@
 //Grid
 $gutter: 30px;
 $columns: 12;
-$viewports: ( xs: 0, sm: 768px, md: 1024px, lg: 1200px, xl: 1440px );
+$xs_prefix: xs;
+$sm_prefix: sm;
+$md_prefix: md;
+$lg_prefix: lg;
+$xl_prefix: xl;
+$xs: 0;
+$sm: 768px;
+$md: 1024px;
+$lg: 1200px;
+$xl: 1440px;
+$xs-max: $sm - 1px;
+$sm-max: $md - 1px;
+$md-max: $lg - 1px;
+$lg-max: $xl - 1px;
+
+$viewports: ( $xs_prefix: ($xs, $xs-max), $sm_prefix: ($sm, $sm-max), $md_prefix: ($md, $md-max), $lg_prefix: ($lg, $lg-max), $xl_prefix: $xl);
 
 //Buttons
 $button-lh: 1.25;

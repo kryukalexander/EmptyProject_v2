@@ -29,7 +29,7 @@
 
 @mixin makeGrid {
     @each $key, $value in $viewports {
-        @include createColumns ($key, $value);
+        @include createColumns ($key, nth($value, 1));
     }
 }
 

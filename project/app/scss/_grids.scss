@@ -40,3 +40,34 @@
     min-height: 1px;
     @include makeGrid();
 }
+
+@each $key,
+$value in $viewports {
+    .#{$key}-visible {
+        display: none !important;
+        @if $key==$xl_prefix {
+            @media all and (min-width: nth($value, 1)) {
+                display: block !important;
+            }
+        }
+        @else {
+            @media all and (max-width: nth($value, 2)) and (min-width: nth($value, 1)) {
+                display: block !important;
+            }
+        }
+    }
+
+    .#{$key}-hidden {
+        display: block !important;
+        @if $key==$xl_prefix {
+            @media all and (min-width: nth($value, 1)) {
+                display: none !important;
+            }
+        }
+        @else {
+            @media all and (max-width: nth($value, 2)) and (min-width: nth($value, 1)) {
+                display: none !important;
+            }
+        }
+    }
+}
