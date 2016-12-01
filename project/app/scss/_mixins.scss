@@ -19,8 +19,9 @@
         &.col-#{$prefix}-auto {
             margin: 0 auto;
         }
-
-
+        &.col-#{$prefix}-grow {
+            flex-grow: 1;
+        }
         &.col-#{$prefix}-right {
             margin-left: auto;
         }
