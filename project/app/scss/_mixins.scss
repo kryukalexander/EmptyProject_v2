@@ -1,63 +1,41 @@
 @import "vars";
 
 //Grid mixins
-@mixin createColumns ($prefix, $br-min) {
+@mixin createColumns ($prefix) {
 
-    @if $br-min == 0 {
-        @for $i from 1 through $columns {
+    @for $i from 1 through $columns {
 
-            &.col-#{$prefix}-#{$i} {
-                flex-basis: calc( (100%/#{($columns / $i)}) - #{$gutter} );
-            }
-
-            &.col-offset-#{$prefix}-#{$i} {
-                margin-left: calc( (100%/#{($columns / $i)}) + #{$gutter / 2});
-            }
-
+        &.col-#{$prefix}-#{$i} {
+            flex-basis: calc((100% / #{($columns / $i)}) - #{$gutter});
         }
 
-        &.col-#{$prefix}-auto {
-            margin: 0 auto;
+        &.col-offset-#{$prefix}-#{$i} {
+            margin-left: calc((100% / #{($columns / $i)}) + #{$gutter / 2});
         }
-        &.col-#{$prefix}-grow {
-            flex-grow: 1;
-        }
-        &.col-#{$prefix}-right {
-            margin-left: auto;
-        }
-    } @else {
 
-        @media all and (min-width: $br-min) {
-            @for $i from 1 through $columns {
-
-                &.col-#{$prefix}-#{$i} {
-                    flex-basis: calc( (100%/#{($columns / $i)}) - #{$gutter} );
-                }
-
-                &.col-offset-#{$prefix}-#{$i} {
-                    margin-left: calc( (100%/#{($columns / $i)}) + #{$gutter / 2});
-                }
-
-            }
-
-            &.col-#{$prefix}-auto {
-                margin: 0 auto;
-            }
-            &.col-#{$prefix}-grow {
-                flex-grow: 1;
-            }
-            &.col-#{$prefix}-right {
-                margin-left: auto;
-            }
-        }
     }
 
-
+    &.col-#{$prefix}-auto {
+        margin: 0 auto;
+    }
+    &.col-#{$prefix}-grow {
+        flex-grow: 1;
+    }
+    &.col-#{$prefix}-right {
+        margin-left: auto;
+    }
 }
 
 @mixin makeGrid {
     @each $key, $value in $viewports {
-        @include createColumns ($key, $value);
+        @if $value == 0 {
+            @include createColumns ($key);
+        } @else {
+            @media all and (max-width: $value) {
+                @include createColumns ($key);
+            }
+        }
+
     }
 }
 
