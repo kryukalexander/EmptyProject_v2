@@ -41,6 +41,14 @@
     @include makeGrid();
 }
 
+%hidden {
+    display: none !important;
+}
+
+%visible {
+    display: block !important;
+}
+
 @for $i from 1 through length($viewports) {
     $key: nth(nth($viewports, $i), 1);
     $value: nth(nth($viewports, $i), 2);
@@ -51,11 +59,11 @@
     }
 
     .#{$key}-visible {
-        display: none !important;
+        @extend %hidden;
     }
 
     .#{$key}-hidden {
-        display: block !important;
+        @extend %visible;
     }
 
     @if ($i == length($viewports)) {
