@@ -41,31 +41,50 @@
     @include makeGrid();
 }
 
-@each $key,
-$value in $viewports {
+@for $i from 1 through length($viewports) {
+    $key: nth(nth($viewports, $i), 1);
+    $value: nth(nth($viewports, $i), 2);
+    $next-val: false;
+
+    @if $i < length($viewports) {
+        $next-val: nth(nth($viewports, $i + 1), 2);
+    }
+
     .#{$key}-visible {
         display: none !important;
-        @if $key==$xl_prefix {
-            @media all and (min-width: nth($value, 1)) {
-                display: block !important;
-            }
-        }
-        @else {
-            @media all and (max-width: nth($value, 2)) and (min-width: nth($value, 1)) {
-                display: block !important;
-            }
-        }
     }
 
     .#{$key}-hidden {
         display: block !important;
-        @if $key==$xl_prefix {
-            @media all and (min-width: nth($value, 1)) {
+    }
+
+    @if ($i == length($viewports)) {
+        @media all and (min-width: $value) {
+            .#{$key}-visible {
+                display: block !important;
+            }
+
+            .#{$key}-hidden {
                 display: none !important;
             }
         }
-        @else {
-            @media all and (max-width: nth($value, 2)) and (min-width: nth($value, 1)) {
+    } @else if ($i == 1) {
+        @media all and (max-width: $next-val - 1px) {
+            .#{$key}-visible {
+                display: block !important;
+            }
+
+            .#{$key}-hidden {
+                display: none !important;
+            }
+        }
+    } @else {
+        @media all and (max-width: $next-val - 1px) and (min-width: $value) {
+            .#{$key}-visible {
+                display: block !important;
+            }
+
+            .#{$key}-hidden {
                 display: none !important;
             }
         }
