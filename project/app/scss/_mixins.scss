@@ -31,7 +31,7 @@
         @if $value == 0 {
             @include createColumns ($key);
         } @else {
-            @media all and (max-width: $value) {
+            @media all and (min-width: $value) {
                 @include createColumns ($key);
             }
         }
