@@ -19,23 +19,29 @@
     flex-direction: row;
     flex-wrap: wrap;
 
+    &.no-gutter {
+
+        .col {
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        margin-left: 0;
+        margin-right: 0;
+    }
+
     &.centered {
         justify-content: center;
-        .col{
-            margin: 0 $gutter/2;
-        }
+
     }
 
     &.to-right {
         justify-content: flex-end;
-        .col {
-            margin: 0 $gutter/2;
-        }
     }
 }
 
 .col {
-    margin: 0 $gutter/2;
+    padding: 0 $gutter/2;
     flex-basis: 100%;
     min-height: 1px;
     @include makeGrid();

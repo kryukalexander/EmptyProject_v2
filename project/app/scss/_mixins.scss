@@ -6,22 +6,22 @@
     @for $i from 1 through $columns {
 
         &.col-#{$prefix}-#{$i} {
-            flex-basis: calc((100% / #{($columns / $i)}) - #{$gutter});
+            flex-basis: ($i/$columns) * 100%;
         }
 
-        &.col-offset-#{$prefix}-#{$i} {
-            margin-left: calc((100% / #{($columns / $i)}) + #{$gutter / 2});
+        &.offset-#{$prefix}-#{$i} {
+            margin-left: ($i/$columns) * 100%;
         }
 
     }
 
-    &.col-#{$prefix}-auto {
+    &.#{$prefix}-auto {
         margin: 0 auto;
     }
-    &.col-#{$prefix}-grow {
+    &.#{$prefix}-grow {
         flex-grow: 1;
     }
-    &.col-#{$prefix}-right {
+    &.#{$prefix}-right {
         margin-left: auto;
     }
 }
