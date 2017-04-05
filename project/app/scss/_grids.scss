@@ -1,106 +1,33 @@
 @import "vars";
 @import "mixins";
 
-.wrapper {
+.grid {
     width: 100%;
-    max-width: 1024px;
     margin: 0 auto;
     padding: 0 $gutter/2;
     box-sizing: border-box;
 
-    &.full {
-        max-width: none;
-    }
-}
-
-.row {
-    display: flex;
-    margin: 0 $gutter/-2;
-    flex-direction: row;
-    flex-wrap: wrap;
-
-    &.no-gutter {
-
-        .col {
-            padding-left: 0;
-            padding-right: 0;
-        }
-
-        margin-left: 0;
-        margin-right: 0;
+    &--fixed {
+        max-width: $grid-width;
     }
 
-    &.centered {
-        justify-content: center;
+    &__row {
+        -js-display: flex;
+        display: flex;
+        margin: 0 $gutter/-2;
+        flex-direction: row;
+        flex-wrap: wrap;
 
-    }
-
-    &.to-right {
-        justify-content: flex-end;
-    }
-}
-
-.col {
-    padding: 0 $gutter/2;
-    flex-basis: 100%;
-    min-height: 1px;
-    @include makeGrid();
-}
-
-%hidden {
-    display: none !important;
-}
-
-%visible {
-    display: block !important;
-}
-
-@for $i from 1 through length($viewports) {
-    $key: nth(nth($viewports, $i), 1);
-    $value: nth(nth($viewports, $i), 2);
-    $next-val: false;
-
-    @if $i < length($viewports) {
-        $next-val: nth(nth($viewports, $i + 1), 2);
-    }
-
-    .#{$key}-visible {
-        @extend %hidden;
-    }
-
-    .#{$key}-hidden {
-        @extend %visible;
-    }
-
-    @if ($i == length($viewports)) {
-        @media all and (min-width: $value) {
-            .#{$key}-visible {
-                display: block !important;
-            }
-
-            .#{$key}-hidden {
-                display: none !important;
-            }
-        }
-    } @else if ($i == 1) {
-        @media all and (max-width: $next-val - 1px) {
-            .#{$key}-visible {
-                display: block !important;
-            }
-
-            .#{$key}-hidden {
-                display: none !important;
-            }
-        }
-    } @else {
-        @media all and (max-width: $next-val - 1px) and (min-width: $value) {
-            .#{$key}-visible {
-                display: block !important;
-            }
-
-            .#{$key}-hidden {
-                display: none !important;
-            }
+        &--no-gutter {
+            .grid__col { padding: 0; }
         }
     }
+
+    &__col {
+        padding: 0 $gutter/2;
+        flex-basis: 100%;
+        min-height: 1px;
+        @include makeGrid();
+    }
 }
+

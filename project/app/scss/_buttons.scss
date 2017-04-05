@@ -16,13 +16,13 @@
     &:active {
         outline: none;
     }
-    &-sm {
-        font-size: 12px;
+    &--sm {
+        font-size: $button-font-small;
     }
-    &-lg {
-        font-size: 20px;
+    &--lg {
+        font-size: $button-font-large;
     }
-    &-block {
+    &--block {
         display: block;
         width: 100%;
     }

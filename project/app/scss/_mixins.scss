@@ -5,23 +5,23 @@
 
     @for $i from 1 through $columns {
 
-        &.col-#{$prefix}-#{$i} {
+        &--#{$prefix}-#{$i} {
             flex-basis: ($i/$columns) * 100%;
         }
 
-        &.offset-#{$prefix}-#{$i} {
+        &--offset-#{$prefix}-#{$i} {
             margin-left: ($i/$columns) * 100%;
         }
 
     }
 
-    &.#{$prefix}-auto {
+    &--#{$prefix}-auto {
         margin: 0 auto;
     }
-    &.#{$prefix}-grow {
+    &--#{$prefix}-grow {
         flex-grow: 1;
     }
-    &.#{$prefix}-right {
+    &--#{$prefix}-right {
         margin-left: auto;
     }
 }
