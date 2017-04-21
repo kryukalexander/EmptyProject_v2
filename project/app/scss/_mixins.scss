@@ -6,7 +6,7 @@
     @for $i from 1 through $columns {
 
         &--#{$prefix}-#{$i} {
-            flex-basis: ($i/$columns) * 100%;
+            width: ($i/$columns) * 100%;
         }
 
         &--offset-#{$prefix}-#{$i} {
