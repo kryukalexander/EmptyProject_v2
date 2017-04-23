@@ -8,6 +8,7 @@ const styles = [
 ];
 
 //todo insert babel
+//todo insert html loader
 
 module.exports = {
     context: path.resolve(__dirname, './src'),
