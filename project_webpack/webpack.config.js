@@ -12,7 +12,7 @@ const styles = [
 
 module.exports = {
     context: path.resolve(__dirname, './src'),
-    entry: './app.js',
+    entry: './index.js',
     output: {
         path: path.resolve(__dirname, './dist/assets'),
         filename: 'bundle.js',
@@ -29,6 +29,19 @@ module.exports = {
                 use: ExtractTextPlugin.extract({
                     use: styles
                 })
+            },
+
+            {
+                test: /\.html$/,
+                loader: "raw-loader"
+            },
+
+            {
+                test: /\.(jpe?g|png|gif|svg)$/i,
+                use: [
+                    'url-loader?limit=10000',
+                    'img-loader'
+                ]
             },
 
         ],
