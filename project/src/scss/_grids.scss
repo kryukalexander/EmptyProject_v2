@@ -25,7 +25,7 @@
 
     &__col {
         padding: 0 $gutter/2;
-        flex-basis: 100%;
+        width: 100%;
         min-height: 1px;
         @include makeGrid();
     }

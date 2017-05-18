@@ -12,17 +12,6 @@
         &--offset-#{$prefix}-#{$i} {
             margin-left: ($i/$columns) * 100%;
         }
-
-    }
-
-    &--#{$prefix}-auto {
-        margin: 0 auto;
-    }
-    &--#{$prefix}-grow {
-        flex-grow: 1;
-    }
-    &--#{$prefix}-right {
-        margin-left: auto;
     }
 }
 

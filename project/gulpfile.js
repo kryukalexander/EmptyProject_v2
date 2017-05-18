@@ -1,5 +1,3 @@
-//Plugins
-
 var gulp = require('gulp');
 var sass = require('gulp-sass');
 var browserSync = require('browser-sync');
@@ -15,40 +13,58 @@ var gulpif = require('gulp-if');
 var svgstore = require('gulp-svgstore');
 var rename = require("gulp-rename");
 var cheerio = require('gulp-cheerio');
+var preprocess = require('gulp-preprocess');
 
-//Patchs
-
-var dir = 'app/';
-var build = 'dist';
-var scss_patch = dir + 'scss/';
-var css_patch = dir + 'css/';
-var js_patch = dir + 'js/';
-var pre_img_patch = dir + 'img_src/';
-var img_patch = dir + 'images/';
-var svg_patch = dir + 'svg/';
-
-
-//Tasks
-
-//Sass to css + autoprefix + min
-gulp.task('sass', function () {
-    return gulp.src(scss_patch + 'style.scss')
-        .pipe(sass().on('error', sass.logError))
-        .pipe(autoprefixer(['last 25 versions', '> 1%', 'ie 8', 'ie 7'], {cascade: true}))
-        .pipe(gulp.dest(css_patch));
+//build html
+gulp.task('build:html', function () {
+    return gulp.src('src/*.html')
+        .pipe(preprocess())
+        .pipe(useref())
+        .pipe(gulpif('*.css', cssnano()))
+        .pipe(gulpif('*.js', uglify()))
+        .pipe(gulp.dest('build'));
 });
 
-//Browser sync
+// scss
+gulp.task('build:scss', function () {
+    return gulp.src('src/scss/style.scss')
+        .pipe(sass().on('error', sass.logError))
+        .pipe(autoprefixer(['last 25 versions', '> 1%', 'ie 8', 'ie 7'], {cascade: true}))
+        .pipe(cssnano())
+        .pipe(gulp.dest('build/css/'));
+});
+
+//build js
+gulp.task('build:js', function () {
+    return gulp.src('src/partials/_scritps.html')
+        .pipe(useref())
+        .pipe(gulp.dest('build'));
+});
+
+//build images
+
+gulp.task('build:images', function () {
+    return gulp.src('src/images/**/*')
+
+        .pipe(imagemin({
+            interlaced: true,
+            progressive: true,
+            svgoPlugins: [{removeViewBox: false}],
+            use: [pngquant()]
+        }))
+
+        .pipe(gulp.dest('build/images'));
+});
+
+//browser sync
 gulp.task('browser-sync', function () {
     browserSync({
         server: {
-            baseDir: dir
+            baseDir: 'build'
 
             //for all directory view
-            //,directory: true 
+            , directory: true
 
-            //for custom index
-            // ,index: 'somefilename.html' 
 
         },
 
@@ -56,61 +72,18 @@ gulp.task('browser-sync', function () {
     });
 });
 
-//images
-
-gulp.task('img', function () {
-    return gulp.src(img_patch + '**/*')
-
-        .pipe(imagemin({ 
-            interlaced: true,
-            progressive: true,
-            svgoPlugins: [{removeViewBox: false}],
-            use: [pngquant()]
-        }))
-
-        .pipe(gulp.dest(build + '/images')); 
-});
-
-//Watch
-
-gulp.task('watch', ['browser-sync', 'sass'], function () {
-    gulp.watch(scss_patch + '*.scss', ['sass']);
-    gulp.watch(css_patch + '*.css', browserSync.reload);
-    gulp.watch(js_patch + '*.js', browserSync.reload);
-    gulp.watch(dir + '*.html', browserSync.reload);
-});
-
-//Build
-
-gulp.task('html', ['sass'], function () {
-    return gulp.src('app/*.html')
-        .pipe(useref())
-        .pipe(gulpif('*.js', uglify()))
-        .pipe(gulpif('*.css', cssnano()))
-        .pipe(gulp.dest(build));
-});
-
 gulp.task('clean', function () {
-    return del.sync(build);
+    return del.sync('build/');
 });
 
-gulp.task('build', ['clean', 'img', 'html'], function () {
-
-    gulp.src('app/fonts/**/*')
-        .pipe(gulp.dest(build + '/fonts'));
+gulp.task('watch', ['build:html', 'build:scss', 'build:js', 'build:images', 'browser-sync'], function () {
+    gulp.watch('src/scss/**/*.scss', ['build:scss']);
+    gulp.watch('src/js/**/*.js', ['build:html'], browserSync.reload);
+    gulp.watch('src/**/*.html', ['build:html'], browserSync.reload);
+    gulp.watch('src/images/**/*', ['build:images'], browserSync.reload);
+    gulp.watch('build/css/**/*.css', browserSync.reload);
+    gulp.watch('build/js/**/*.js', browserSync.reload);
 });
 
-gulp.task('svgstore', function () {
-    return gulp.src(svg_patch + 'icon/**/*.svg')
-        .pipe(rename({prefix: 'icon-'}))
-        .pipe(cheerio({
-            run: function ($) {
-                $('[fill]').removeAttr('fill');
-                $('[style]').removeAttr('style');
-            },
-            parserOptions: { xmlMode: true }
-        }))
-        .pipe(svgstore({ inlineSvg: true }))
-        .pipe(gulp.dest(svg_patch));
-});
+
 
