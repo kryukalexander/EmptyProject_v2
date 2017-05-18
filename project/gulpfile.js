@@ -85,5 +85,19 @@ gulp.task('watch', ['build:html', 'build:scss', 'build:js', 'build:images', 'bro
     gulp.watch('build/js/**/*.js', browserSync.reload);
 });
 
+// gulp.task('svgstore', function () {
+//     return gulp.src(svg_patch + 'icon/**/*.svg')
+//         .pipe(rename({prefix: 'icon-'}))
+//         .pipe(cheerio({
+//             run: function ($) {
+//                 $('[fill]').removeAttr('fill');
+//                 $('[style]').removeAttr('style');
+//             },
+//             parserOptions: { xmlMode: true }
+//         }))
+//         .pipe(svgstore({ inlineSvg: true }))
+//         .pipe(gulp.dest(svg_patch));
+// });
+
 
 
