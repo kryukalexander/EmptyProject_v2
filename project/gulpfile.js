@@ -76,13 +76,24 @@ gulp.task('clean', function () {
     return del.sync('build/');
 });
 
-gulp.task('watch', ['build:html', 'build:scss', 'build:js', 'build:images', 'browser-sync'], function () {
+gulp.task('build:fonts', function () {
+    gulp.src('src/fonts/**/*')
+        .pipe(gulp.dest('build/fonts/'));
+});
+
+gulp.task('build:all', ['clean', 'build:html', 'build:fonts', 'build:scss', 'build:js', 'build:images'], function () {
+    console.log('Building');
+});
+
+gulp.task('watch', ['build:html', 'build:fonts', 'build:scss', 'build:js', 'build:images', 'browser-sync'], function () {
     gulp.watch('src/scss/**/*.scss', ['build:scss']);
-    gulp.watch('src/js/**/*.js', ['build:html'], browserSync.reload);
-    gulp.watch('src/**/*.html', ['build:html'], browserSync.reload);
-    gulp.watch('src/images/**/*', ['build:images'], browserSync.reload);
+    gulp.watch('src/js/**/*.js', ['build:html']);
+    gulp.watch('src/**/*.html', ['build:html']);
+    gulp.watch('src/images/**/*', ['build:images']);
     gulp.watch('build/css/**/*.css', browserSync.reload);
     gulp.watch('build/js/**/*.js', browserSync.reload);
+    gulp.watch('build/*.html', browserSync.reload);
+    gulp.watch('build/images/**/*', browserSync.reload);
 });
 
 // gulp.task('svgstore', function () {
