@@ -33,7 +33,9 @@ module.exports = {
 
             {
                 test: /\.html$/,
-                loader: "raw-loader"
+                loaders: [
+                    "html-loader",
+                    "file-loader?name=../[name].[ext]" ]
             },
 
             {
