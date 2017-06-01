@@ -15,7 +15,7 @@ module.exports = {
     entry: './index.js',
     output: {
         path: path.resolve(__dirname, './dist/assets'),
-        filename: 'bundle.js',
+        filename: 'js/bundle.js',
         publicPath: '/assets',
     },
     devServer: {
@@ -50,6 +50,6 @@ module.exports = {
         ],
     },
     plugins: [
-    new ExtractTextPlugin('styles.css'),
+    new ExtractTextPlugin('css/styles.css'),
     ]
 };
