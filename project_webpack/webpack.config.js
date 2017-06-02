@@ -39,6 +39,11 @@ module.exports = {
             },
 
             {
+                test: /\.pug$/,
+                use: "pug-loader?pretty=true"
+            },
+
+            {
                 test: /\.(jpe?g|png|gif|svg)$/i,
                 use: [
                     'url-loader?limit=10000&name=[path][name].[ext]',
@@ -51,11 +56,11 @@ module.exports = {
     plugins: [
     new ExtractTextPlugin('css/styles.css'),
     new HtmlWebpackPlugin({
-        template: 'index.html',
+        template: 'index.pug',
         filename: '../index.html',
         inject: false,
         minify: false,
-        alwaysWriteToDisk: true
+        alwaysWriteToDisk: false
     }),
     new HtmlWebpackHarddiskPlugin()
     ]
