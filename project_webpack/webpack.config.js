@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const styles = [
     'css-loader',
     'postcss-loader',
@@ -8,7 +9,6 @@ const styles = [
 ];
 
 //todo insert babel
-//todo insert html loader
 
 module.exports = {
     context: path.resolve(__dirname, './src'),
@@ -16,7 +16,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, './dist/assets'),
         filename: 'js/bundle.js',
-        publicPath: '/assets',
+        publicPath: 'assets/',
     },
     devServer: {
         contentBase: path.resolve(__dirname, './src'),
@@ -34,15 +34,13 @@ module.exports = {
 
             {
                 test: /\.html$/,
-                loaders: [
-                    "html-loader",
-                    "file-loader?name=../[name].[ext]" ]
+                use: "html-loader?minimize=false"
             },
 
             {
                 test: /\.(jpe?g|png|gif|svg)$/i,
                 use: [
-                    'url-loader?limit=10000&name=./img/[name].[ext]',
+                    'url-loader?limit=10000&name=[path][name].[ext]',
                     'img-loader'
                 ]
             },
@@ -51,5 +49,11 @@ module.exports = {
     },
     plugins: [
     new ExtractTextPlugin('css/styles.css'),
+    new HtmlWebpackPlugin({
+        template: 'index.html',
+        filename: '../index.html',
+        inject: false,
+        minify: false
+    })
     ]
 };
