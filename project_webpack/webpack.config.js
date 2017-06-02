@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin');
 const styles = [
     'css-loader',
     'postcss-loader',
@@ -53,7 +54,9 @@ module.exports = {
         template: 'index.html',
         filename: '../index.html',
         inject: false,
-        minify: false
-    })
+        minify: false,
+        alwaysWriteToDisk: true
+    }),
+    new HtmlWebpackHarddiskPlugin()
     ]
 };
