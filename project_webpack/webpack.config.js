@@ -20,7 +20,9 @@ module.exports = {
         publicPath: 'assets/',
     },
     devServer: {
-        contentBase: path.resolve(__dirname, './src'),
+        // contentBase: path.resolve(__dirname, './src'),
+        contentBase: path.resolve(__dirname),
+
     },
 
     module: {
