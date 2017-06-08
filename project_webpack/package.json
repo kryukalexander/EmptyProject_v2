@@ -4,6 +4,7 @@
   "description": "",
   "main": "webpack.config.js",
   "devDependencies": {
+    "concurrently": "^3.4.0",
     "css-loader": "^0.28.0",
     "extract-text-webpack-plugin": "^2.1.0",
     "file-loader": "^0.11.1",
@@ -27,9 +28,12 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": " \"npm run pug-build\" && webpack-dev-server",
+    "start:no_pug": "webpack-dev-server",
+    "build:no_pug": "webpack -p",
+    "start": "concurrently \"npm run pug-watch\" \"webpack-dev-server\" ",
     "build": " \"npm run pug-build\" && webpack -p",
-    "pug-build": "pug -o src/ src/templates/ -P"
+    "pug-build": "pug -o src/ src/templates/ -P",
+    "pug-watch": "pug -o src/ src/templates/ -P -w"
   },
   "author": "",
   "license": "ISC"
