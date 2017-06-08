@@ -2,7 +2,6 @@ const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin');
 const styles = [
     'css-loader',
     'postcss-loader',
@@ -39,11 +38,6 @@ module.exports = {
                 use: "html-loader?minimize=false"
             },
 
-            // {
-            //     test: /\.pug$/,
-            //     use: "pug-loader?pretty=true"
-            // },
-
             {
                 test: /\.(jpe?g|png|gif|svg)$/i,
                 use: [
@@ -60,7 +54,6 @@ module.exports = {
         template: 'index.html',
         filename: '../index.html',
         inject: false,
-        minify: false,
     })
     ]
 };
