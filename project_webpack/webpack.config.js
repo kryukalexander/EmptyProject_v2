@@ -39,10 +39,10 @@ module.exports = {
                 use: "html-loader?minimize=false"
             },
 
-            {
-                test: /\.pug$/,
-                use: "pug-loader?pretty=true"
-            },
+            // {
+            //     test: /\.pug$/,
+            //     use: "pug-loader?pretty=true"
+            // },
 
             {
                 test: /\.(jpe?g|png|gif|svg)$/i,
@@ -57,12 +57,10 @@ module.exports = {
     plugins: [
     new ExtractTextPlugin('css/styles.css'),
     new HtmlWebpackPlugin({
-        template: 'index.pug',
+        template: 'index.html',
         filename: '../index.html',
         inject: false,
         minify: false,
-        alwaysWriteToDisk: false
-    }),
-    new HtmlWebpackHarddiskPlugin()
+    })
     ]
 };
