@@ -29,7 +29,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": " \"npm run pug-build\" && webpack-dev-server",
     "build": " \"npm run pug-build\" && webpack -p",
-    "pug-build": "pug -o src/ src/templates/index.pug -P"
+    "pug-build": "pug -o src/ src/templates/ -P"
   },
   "author": "",
   "license": "ISC"
