@@ -1,17 +1,18 @@
+// Imports
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin')
+
+// Settings
 const styles = [
     'css-loader',
     'postcss-loader',
     'sass-loader',
 ];
 
-let pathsToClean = [
-    'dist'
-];
+let pathsToClean = [ 'dist' ];
 
 let cleanOptions = {
     root:    __dirname,
@@ -21,6 +22,7 @@ let cleanOptions = {
 
 const tmpLang = 'pug';
 
+// Config
 module.exports = {
     context: path.resolve(__dirname, './src'),
     entry: './index.js',
