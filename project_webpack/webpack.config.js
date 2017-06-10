@@ -2,29 +2,40 @@ const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin');
 const styles = [
     'css-loader',
     'postcss-loader',
     'sass-loader',
 ];
 
-//todo insert babel
+const tmpLang = 'pug';
 
 module.exports = {
     context: path.resolve(__dirname, './src'),
     entry: './index.js',
     output: {
-        path: path.resolve(__dirname, './dist/assets'),
+        path: path.resolve(__dirname, './dist/'),
         filename: 'js/bundle.js',
-        publicPath: 'assets/',
+        publicPath: '/',
     },
     devServer: {
-        contentBase: path.resolve(__dirname, './src'),
+        contentBase: path.resolve(__dirname, './dist/'),
+        watchContentBase: true,
+        publicPath: "/"
+
     },
 
     module: {
         rules: [
+
+            {
+                test: /\.js$/,
+                exclude: [/node_modules/],
+                use: [{
+                    loader: 'babel-loader',
+                    options: { presets: ['es2015'] },
+                }],
+            },
 
             {
                 test: /\.(sass|scss|css)$/,
@@ -36,6 +47,11 @@ module.exports = {
             {
                 test: /\.html$/,
                 use: "html-loader?minimize=false"
+            },
+
+            {
+                test: /\.pug$/,
+                use: "pug-loader?pretty=true"
             },
 
             {
@@ -51,12 +67,9 @@ module.exports = {
     plugins: [
     new ExtractTextPlugin('css/styles.css'),
     new HtmlWebpackPlugin({
-        template: 'index.html',
-        filename: '../index.html',
-        inject: false,
-        minify: false,
-        alwaysWriteToDisk: true
-    }),
-    new HtmlWebpackHarddiskPlugin()
+        template: tmpLang + '/index.' + tmpLang,
+        filename: 'index.html',
+        inject: true,
+    })
     ]
 };

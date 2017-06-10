@@ -1,3 +1,3 @@
-var message = 'Hello world';
-console.log(message);
+let m = 'Hello world';
+console.log(m);
 
