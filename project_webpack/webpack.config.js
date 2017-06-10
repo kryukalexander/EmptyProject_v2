@@ -8,20 +8,20 @@ const styles = [
     'sass-loader',
 ];
 
-const tmpLang = 'html';
+const tmpLang = 'pug';
 
 module.exports = {
     context: path.resolve(__dirname, './src'),
     entry: './index.js',
     output: {
-        path: path.resolve(__dirname, './dist/'),
+        path: path.resolve(__dirname, './dist/assets'),
         filename: 'js/bundle.js',
         publicPath: '/',
     },
     devServer: {
         contentBase: path.resolve(__dirname, './dist/'),
         watchContentBase: true,
-        publicPath: "/"
+        publicPath: '/'
 
     },
 
@@ -68,7 +68,7 @@ module.exports = {
     new ExtractTextPlugin('css/styles.css'),
     new HtmlWebpackPlugin({
         template: tmpLang + '/index.' + tmpLang,
-        filename: 'index.html',
+        filename: '../index.html',
         inject: true,
     })
     ]
