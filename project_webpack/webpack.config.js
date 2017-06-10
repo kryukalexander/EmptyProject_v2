@@ -8,7 +8,7 @@ const styles = [
     'sass-loader',
 ];
 
-const tmpLang = 'pug';
+const tmpLang = 'html';
 
 module.exports = {
     context: path.resolve(__dirname, './src'),
