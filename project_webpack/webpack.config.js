@@ -8,18 +8,18 @@ const styles = [
     'sass-loader',
 ];
 
-//todo insert babel
+const tmpLang = 'pug';
 
 module.exports = {
     context: path.resolve(__dirname, './src'),
     entry: './index.js',
     output: {
-        path: path.resolve(__dirname, './dist/assets'),
+        path: path.resolve(__dirname, './dist/'),
         filename: 'js/bundle.js',
-        publicPath: 'assets/',
+        publicPath: '/',
     },
     devServer: {
-        contentBase: path.resolve(__dirname, './src'),
+        contentBase: path.resolve(__dirname, './dist/'),
         watchContentBase: true,
         publicPath: "/"
 
@@ -27,6 +27,15 @@ module.exports = {
 
     module: {
         rules: [
+
+            {
+                test: /\.js$/,
+                exclude: [/node_modules/],
+                use: [{
+                    loader: 'babel-loader',
+                    options: { presets: ['es2015'] },
+                }],
+            },
 
             {
                 test: /\.(sass|scss|css)$/,
@@ -58,9 +67,9 @@ module.exports = {
     plugins: [
     new ExtractTextPlugin('css/styles.css'),
     new HtmlWebpackPlugin({
-        template: 'templates/index.pug',
-        filename: '../index.html',
-        inject: false,
+        template: tmpLang + '/index.' + tmpLang,
+        filename: 'index.html',
+        inject: true,
     })
     ]
 };
