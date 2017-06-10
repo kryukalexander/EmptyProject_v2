@@ -2,11 +2,22 @@ const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin')
 const styles = [
     'css-loader',
     'postcss-loader',
     'sass-loader',
 ];
+
+let pathsToClean = [
+    'dist'
+];
+
+let cleanOptions = {
+    root:    __dirname,
+    verbose:  true,
+    dry:      false
+};
 
 const tmpLang = 'pug';
 
@@ -70,6 +81,8 @@ module.exports = {
         template: tmpLang + '/index.' + tmpLang,
         filename: '../index.html',
         inject: true,
-    })
-    ]
+    }),
+    new CleanWebpackPlugin(pathsToClean, cleanOptions),
+    ],
+
 };
