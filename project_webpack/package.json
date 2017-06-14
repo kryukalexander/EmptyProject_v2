@@ -8,7 +8,6 @@
     "babel-loader": "^7.0.0",
     "babel-preset-es2015": "^6.24.1",
     "clean-webpack-plugin": "^0.1.16",
-    "concurrently": "^3.4.0",
     "css-loader": "^0.28.0",
     "extract-text-webpack-plugin": "^2.1.0",
     "file-loader": "^0.11.2",
@@ -31,7 +30,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "concurrently \"webpack -w\" \"webpack-dev-server\" ",
+    "start": "webpack-dev-server --inline",
     "build": "webpack -p"
   },
   "author": "",

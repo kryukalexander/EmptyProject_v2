@@ -1,3 +1,4 @@
+'use strict';
 // Imports
 const path = require('path');
 const webpack = require('webpack');
@@ -27,15 +28,14 @@ module.exports = {
     context: path.resolve(__dirname, './src'),
     entry: './index.js',
     output: {
-        path: path.resolve(__dirname, './dist/assets'),
+        path: path.resolve(__dirname, './dist'),
         filename: 'js/bundle.js',
         publicPath: '/',
     },
     devServer: {
         contentBase: path.resolve(__dirname, './dist/'),
         watchContentBase: true,
-        publicPath: '/'
-
+        publicPath: '/',
     },
 
     module: {
@@ -70,7 +70,7 @@ module.exports = {
             {
                 test: /\.(jpe?g|png|gif|svg)$/i,
                 use: [
-                    'url-loader?limit=10000&name=[path][name].[ext]',
+                    'url-loader?limit=1500&name=[path][name].[ext]',
                     'img-loader'
                 ]
             },
@@ -81,7 +81,6 @@ module.exports = {
     new ExtractTextPlugin('css/styles.css'),
     new HtmlWebpackPlugin({
         template: tmpLang + '/index.' + tmpLang,
-        filename: '../index.html',
         inject: true,
     }),
     new CleanWebpackPlugin(pathsToClean, cleanOptions),
