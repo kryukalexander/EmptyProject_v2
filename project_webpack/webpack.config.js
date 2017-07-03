@@ -80,7 +80,7 @@ module.exports = {
     plugins: [
     new ExtractTextPlugin('css/styles.css'),
     new HtmlWebpackPlugin({
-        template: tmpLang + '/index.' + tmpLang,
+        template: 'templates/index.' + tmpLang,
         inject: true,
     }),
     new CleanWebpackPlugin(pathsToClean, cleanOptions),
