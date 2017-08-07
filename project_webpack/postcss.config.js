@@ -4,7 +4,6 @@ module.exports = {
         'postcss-cssnext': {
             browsers: ['last 25 versions'],
         },
-        'postcss-flexibility': {},
         'postcss-flexbugs-fixes' : {}
     },
 };
