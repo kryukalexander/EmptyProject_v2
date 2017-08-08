@@ -92,7 +92,7 @@ gulp.task('browser-sync', () => {
 });
 
 //Watch
-gulp.task('watch', ['dev:css', 'browser-sync', 'dev:html'], () => {
+gulp.task('watch', ['clean', 'dev:css', 'dev:html', 'browser-sync'], () => {
     gulp.watch(dirs.scss, ['dev:css']);
     gulp.watch(dirs.css + '*.css', browserSync.reload);
     gulp.watch(dirs.htmlAll, ['dev:html', browserSync.reload]);
@@ -106,7 +106,7 @@ gulp.task('clean', () => {
 });
 
 //Build
-gulp.task('build:all', ['build:html', 'build:css', 'build:images'], () => {
+gulp.task('build:all', ['clean', 'build:html', 'build:css', 'build:images'], () => {
     gulp.src(dirs.fonts).pipe(gulp.dest(dirs.build.fonts));
     gulp.src('src/index.html').pipe(gulp.dest('build/'))
 });
