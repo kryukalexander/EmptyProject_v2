@@ -100,7 +100,9 @@ gulp.task('watch', ['dev:css', 'browser-sync', 'dev:html'], () => {
 
 //Clean
 gulp.task('clean', () => {
-    return del.sync('build/');
+    del.sync('build/');
+    del.sync('src/css/');
+    del.sync('src/templates_build')
 });
 
 //Build
