@@ -2,3 +2,4 @@ node_modules
 .idea
 src/css
 src/templates_build
+build
