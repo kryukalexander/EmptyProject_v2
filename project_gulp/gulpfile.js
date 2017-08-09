@@ -35,8 +35,9 @@ const dirs = {
 //CSS
 gulp.task('dev:css', () => {
     gulp.src(dirs.scss)
-    .pipe(sass.sync().on('error',  sass.logError))
-    .pipe(gulp.dest(dirs.css));
+        .pipe(sass.sync().on('error',  sass.logError))
+        .pipe(autoprefixer(autoprefixerSettings, {cascade: true}))
+        .pipe(gulp.dest(dirs.css));
 });
 
 gulp.task('build:css', () => {
