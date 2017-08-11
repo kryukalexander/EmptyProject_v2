@@ -1,5 +1,5 @@
 node_modules
 .idea
 src/css
-src/templates_build
+src/html
 build
