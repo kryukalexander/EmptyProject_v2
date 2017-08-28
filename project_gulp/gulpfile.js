@@ -116,7 +116,10 @@ gulp.task('watch', ['clean', 'css', 'html', 'browser-sync'], () => {
 gulp.task('clean', () => {
     del.sync(build);
     del.sync(dirs.css.dev);
-    del.sync(dirs.html.dev)
+    del.sync(dirs.html.dev);
+    del.sync('src/images/sprite.png');
+    del.sync('src/images/sprite.svg')
+
 });
 
 //Build

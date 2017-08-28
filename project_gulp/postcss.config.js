@@ -8,6 +8,10 @@ module.exports = {
             browsers: autoprefixerSettings,
         },
         'cssnano' : ENV === 'build' ? {} : false,
-        'postcss-flexbugs-fixes' : {}
+        'postcss-flexbugs-fixes' : {},
+        'postcss-sprites': { spritePath: './src/images/' }
     }
 };
+
+//todo postcss-at2x
+//todo postcss-inline-svg

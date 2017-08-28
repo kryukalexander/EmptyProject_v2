@@ -7,10 +7,32 @@ body {
 
 h1 {
     color: $header-col;
-    display: flex;
-    background-color: blue;
 }
 
 p {
     color: $p-col;
+}
+
+.sprite {
+    height: 32px;
+    width: 32px;
+    display: inline-block;
+    margin-right: 10px;
+
+
+    &.tube {
+        background: url('../sprites/youtube.png');
+    }
+
+    &.cloud {
+        background: url('../sprites/cloud.png');
+    }
+
+    &.reddit {
+        background: url('../sprites/reddit.png');
+    }
+
+    &.down {
+        background: url('../sprites/down-chevron.svg');
+    }
 }
