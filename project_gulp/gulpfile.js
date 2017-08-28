@@ -2,9 +2,8 @@
 
 const gulp = require('gulp');
 const sass = require('gulp-sass');
+const postcss = require('gulp-postcss');
 const browserSync = require('browser-sync');
-const cssnano = require('gulp-cssnano');
-const autoprefixer = require('gulp-autoprefixer');
 const preprocess = require('gulp-preprocess');
 const useref = require('gulp-useref');
 const uglify = require('gulp-uglify');
@@ -14,7 +13,8 @@ const pngquant = require('imagemin-pngquant');
 const del = require('del');
 
 //Setup
-const autoprefixerSettings = ['last 25 versions', '> 1%', 'ie 8', 'ie 7'];
+const ENV = process.env.npm_lifecycle_event;
+
 const root = 'src/';
 const build = 'build/';
 
@@ -53,35 +53,28 @@ const dirs = {
 };
 
 //CSS
-gulp.task('dev:css', () => {
-    gulp.src(dirs.scss.all)
+gulp.task('css', () => {
+    const out = ENV === 'build' ? dirs.css.build : dirs.css.dev;
+    return gulp.src(dirs.scss.all)
         .pipe(sass.sync().on('error',  sass.logError))
-        .pipe(autoprefixer(autoprefixerSettings, {cascade: true}))
-        .pipe(gulp.dest(dirs.css.dev));
-});
-
-gulp.task('build:css', () => {
-    gulp.src(dirs.scss.all)
-        .pipe(sass.sync().on('error',  sass.logError))
-        .pipe(autoprefixer(autoprefixerSettings, {cascade: true}))
-        .pipe(cssnano())
-        .pipe(gulp.dest(dirs.css.build));
+        .pipe(postcss())
+        .pipe(gulp.dest(out));
 });
 
 //HTML
-gulp.task('dev:html', () => {
-    gulp.src(dirs.html.root)
-        .pipe(preprocess())
-        .pipe(gulp.dest(dirs.html.dev));
-});
+gulp.task('html', () => {
+    if (ENV === 'build') {
+        return gulp.src(dirs.html.root)
+            .pipe(preprocess())
+            .pipe(useref())
+            .pipe(gulpif('*.js', uglify()))
+            .pipe(gulp.dest(dirs.html.build));
+    } else {
+        return gulp.src(dirs.html.root)
+            .pipe(preprocess())
+            .pipe(gulp.dest(dirs.html.dev));
+    }
 
-gulp.task('build:html', () => {
-    gulp.src(dirs.html.root)
-        .pipe(preprocess())
-        .pipe(useref())
-        .pipe(gulpif('*.js', uglify()))
-        .pipe(gulpif('*.css', cssnano()))
-        .pipe(gulp.dest(dirs.html.build));
 });
 
 //Images
@@ -113,10 +106,10 @@ gulp.task('browser-sync', () => {
 });
 
 //Watch
-gulp.task('watch', ['clean', 'dev:css', 'dev:html', 'browser-sync'], () => {
-    gulp.watch(dirs.scss.all, ['dev:css', browserSync.reload]);
+gulp.task('watch', ['clean', 'css', 'html', 'browser-sync'], () => {
+    gulp.watch(dirs.scss.all, ['css', browserSync.reload]);
     gulp.watch(dirs.js.dev, browserSync.reload);
-    gulp.watch(dirs.html.all, ['dev:html', browserSync.reload]);
+    gulp.watch(dirs.html.all, ['html', browserSync.reload]);
 });
 
 //Clean
@@ -127,7 +120,7 @@ gulp.task('clean', () => {
 });
 
 //Build
-gulp.task('build:all', ['clean', 'build:html', 'build:css', 'build:images'], () => {
+gulp.task('build:all', ['clean', 'html', 'css', 'build:images'], () => {
     gulp.src(dirs.fonts).pipe(gulp.dest(dirs.build.fonts));
     gulp.src('src/index.html').pipe(gulp.dest(build))
 });
