@@ -23,6 +23,29 @@ let cleanOptions = {
 
 const tmpLang = 'pug';
 
+
+
+let pluginsDev = [
+    new ExtractTextPlugin('css/styles.css'),
+    new HtmlWebpackPlugin({
+        template: 'templates/index.' + tmpLang,
+        inject: true,
+    }),
+];
+
+let pluginsBuild = [
+    new ExtractTextPlugin('css/styles.css'),
+    new HtmlWebpackPlugin({
+        template: 'templates/index.' + tmpLang,
+        inject: true,
+    }),
+    new CleanWebpackPlugin(pathsToClean, cleanOptions),
+];
+
+const isProd = process.env.npm_lifecycle_event === 'build';
+let pluginsArray = isProd ? pluginsBuild : pluginsDev;
+
+
 // Config
 module.exports = {
     context: path.resolve(__dirname, './src'),
@@ -77,13 +100,8 @@ module.exports = {
 
         ],
     },
-    plugins: [
-    new ExtractTextPlugin('css/styles.css'),
-    new HtmlWebpackPlugin({
-        template: 'templates/index.' + tmpLang,
-        inject: true,
-    }),
-    new CleanWebpackPlugin(pathsToClean, cleanOptions),
-    ],
+
+
+    plugins: pluginsArray
 
 };
