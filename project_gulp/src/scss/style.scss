@@ -1,0 +1,34 @@
+@import 'vendor';
+@import 'variables';
+
+body {
+    background-color: $body-bg;
+}
+
+h1 {
+    color: $header-col;
+}
+
+p {
+    color: $p-col;
+}
+
+.sprite {
+    height: 32px;
+    width: 32px;
+    display: inline-block;
+    margin-right: 10px;
+
+
+    &.tube {
+        background: url('../sprites/youtube.png');
+    }
+
+    &.cloud {
+        background: url('../sprites/cloud.png');
+    }
+
+    &.reddit {
+        background: url('../sprites/reddit.png');
+    }
+}
