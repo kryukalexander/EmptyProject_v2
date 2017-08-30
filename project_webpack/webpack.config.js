@@ -23,9 +23,7 @@ let cleanOptions = {
 
 const tmpLang = 'pug';
 
-
-
-let pluginsDev = [
+let pluginsCommon = [
     new ExtractTextPlugin('css/styles.css'),
     new HtmlWebpackPlugin({
         template: 'templates/index.' + tmpLang,
@@ -34,16 +32,13 @@ let pluginsDev = [
 ];
 
 let pluginsBuild = [
-    new ExtractTextPlugin('css/styles.css'),
-    new HtmlWebpackPlugin({
-        template: 'templates/index.' + tmpLang,
-        inject: true,
-    }),
     new CleanWebpackPlugin(pathsToClean, cleanOptions),
 ];
 
+pluginsBuild = pluginsBuild.concat(pluginsCommon);
+
 const isProd = process.env.npm_lifecycle_event === 'build';
-let pluginsArray = isProd ? pluginsBuild : pluginsDev;
+let pluginsArray = isProd ? pluginsBuild : pluginsCommon;
 
 
 // Config
@@ -100,7 +95,6 @@ module.exports = {
 
         ],
     },
-
 
     plugins: pluginsArray
 
