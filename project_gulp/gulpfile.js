@@ -53,6 +53,7 @@ gulp.task('css', () => {
         .pipe(gulp.dest(dirs.styles.build));
 });
 
+//JS
 gulp.task('js', () => {
     let scripts = require('./scriptOrder.json');
     return gulp.src(scripts.files)
