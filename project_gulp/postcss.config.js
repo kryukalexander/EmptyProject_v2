@@ -7,9 +7,12 @@ module.exports = {
         'autoprefixer': {
             browsers: autoprefixerSettings,
         },
-        'cssnano' : ENV === 'build' ? {} : false,
         'postcss-flexbugs-fixes' : {},
+        'postcss-at2x' : {
+            skipMissingRetina: true
+        },
         'postcss-sprites': {
+            retina: true,
             spritePath: 'src/images/',
             filterBy: (image) => {
                 if (!/\/images-sprite\//.test(image.url)) {
@@ -17,9 +20,8 @@ module.exports = {
                 }
                 return Promise.resolve();
             }
-        }
+        },
+        'postcss-inline-svg': {},
+        'cssnano' : ENV === 'build' ? {} : false,
     }
 };
-
-//todo postcss-at2x
-//todo postcss-inline-svg
