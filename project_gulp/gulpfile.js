@@ -5,12 +5,11 @@ const sass = require('gulp-sass');
 const postcss = require('gulp-postcss');
 const browserSync = require('browser-sync');
 const preprocess = require('gulp-preprocess');
-const useref = require('gulp-useref');
 const uglify = require('gulp-uglify');
-const gulpif = require('gulp-if');
 const imagemin = require('gulp-imagemin');
 const pngquant = require('imagemin-pngquant');
 const del = require('del');
+const concat = require('gulp-concat');
 
 //Setup
 const ENV = process.env.npm_lifecycle_event;
@@ -20,21 +19,15 @@ const build = 'build/';
 
 const dirs = {
 
-    scss: {
-        folder: root + 'scss/',
-        all: root + 'scss/**/*.scss',
-    },
-
-    css: {
-      dev:   root + 'css/',
-      build: build + 'css/'
+    styles: {
+        dev: root + 'scss/**/*.scss',
+        build: build + 'css/'
     },
 
     html: {
-        root: root + 'templates/*.html',
-        all: root + 'templates/**/*.html',
-        dev: root + 'html/',
-        build: build + 'html/',
+        root: root + '*.html',
+        dev: root + '/**/*.html',
+        build: build,
     },
 
     js: {
@@ -54,31 +47,29 @@ const dirs = {
 
 //CSS
 gulp.task('css', () => {
-    const out = ENV === 'build' ? dirs.css.build : dirs.css.dev;
-    return gulp.src(dirs.scss.all)
+    return gulp.src(dirs.styles.dev)
         .pipe(sass.sync().on('error',  sass.logError))
         .pipe(postcss())
-        .pipe(gulp.dest(out));
+        .pipe(gulp.dest(dirs.styles.build));
+});
+
+gulp.task('js', () => {
+    let scripts = require('./scriptOrder.json');
+    return gulp.src(scripts.files)
+        .pipe(concat('script.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest(dirs.js.build));
 });
 
 //HTML
 gulp.task('html', () => {
-    if (ENV === 'build') {
         return gulp.src(dirs.html.root)
             .pipe(preprocess())
-            .pipe(useref())
-            .pipe(gulpif('*.js', uglify()))
             .pipe(gulp.dest(dirs.html.build));
-    } else {
-        return gulp.src(dirs.html.root)
-            .pipe(preprocess())
-            .pipe(gulp.dest(dirs.html.dev));
-    }
-
 });
 
 //Images
-gulp.task('build:images', () => {
+gulp.task('build:images', ['css'], () => {
     gulp.src(dirs.images)
 
         .pipe(imagemin({
@@ -95,7 +86,7 @@ gulp.task('build:images', () => {
 gulp.task('browser-sync', () => {
     browserSync({
         server: {
-            baseDir: './'
+            baseDir: './build'
 
             //for all directory view
             , directory: true
@@ -106,24 +97,21 @@ gulp.task('browser-sync', () => {
 });
 
 //Watch
-gulp.task('watch', ['clean', 'css', 'html', 'browser-sync'], () => {
-    gulp.watch(dirs.scss.all, ['css', browserSync.reload]);
-    gulp.watch(dirs.js.dev, browserSync.reload);
-    gulp.watch(dirs.html.all, ['html', browserSync.reload]);
+gulp.task('watch', ['clean', 'html', 'js', 'build:images', 'browser-sync'], () => {
+    gulp.watch(dirs.styles.dev, ['css', browserSync.reload]);
+    gulp.watch(dirs.js.dev, ['js', browserSync.reload]);
+    gulp.watch(dirs.html.dev, ['html', browserSync.reload]);
+    gulp.watch('./scriptOrder.json', ['js', browserSync.reload]);
 });
 
 //Clean
 gulp.task('clean', () => {
     del.sync(build);
-    del.sync(dirs.css.dev);
-    del.sync(dirs.html.dev);
     del.sync('src/images/sprite.png');
-    del.sync('src/images/sprite.svg')
-
+    del.sync('src/images/sprite.svg');
 });
 
 //Build
-gulp.task('build:all', ['clean', 'html', 'css', 'build:images'], () => {
+gulp.task('build:all', ['clean', 'html', 'build:images'], () => {
     gulp.src(dirs.fonts).pipe(gulp.dest(dirs.build.fonts));
-    gulp.src('src/index.html').pipe(gulp.dest(build))
 });

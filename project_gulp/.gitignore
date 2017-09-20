@@ -1,5 +1,5 @@
 node_modules
 .idea
-src/css
-src/html
+src/images/sprite.png
+src/images/sprite.svg
 build

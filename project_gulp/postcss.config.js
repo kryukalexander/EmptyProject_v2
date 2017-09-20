@@ -10,9 +10,9 @@ module.exports = {
         'cssnano' : ENV === 'build' ? {} : false,
         'postcss-flexbugs-fixes' : {},
         'postcss-sprites': {
-            spritePath: './src/images/',
+            spritePath: 'src/images/',
             filterBy: (image) => {
-                if (!/\/sprites\//.test(image.url)) {
+                if (!/\/images-sprite\//.test(image.url)) {
                     return Promise.reject();
                 }
                 return Promise.resolve();
