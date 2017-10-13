@@ -8,13 +8,6 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const SpritePlugin = require('svg-sprite-loader/plugin');
 
 // Settings
-const styles = [
-    'css-loader',
-    'postcss-loader',
-    'sass-loader',
-];
-
-let pathsToClean = [ 'dist' ];
 
 let cleanOptions = {
     root:    __dirname,
@@ -25,7 +18,7 @@ let cleanOptions = {
 const tmpLang = 'pug';
 
 let pluginsCommon = [
-    new ExtractTextPlugin('css/styles.css'),
+    new ExtractTextPlugin('styles.css'),
     new HtmlWebpackPlugin({
         template: 'templates/index.' + tmpLang,
         inject: true,
@@ -34,7 +27,7 @@ let pluginsCommon = [
 ];
 
 let pluginsBuild = [
-    new CleanWebpackPlugin(pathsToClean, cleanOptions),
+    new CleanWebpackPlugin([ 'dist' ], cleanOptions),
 ];
 
 pluginsBuild = pluginsBuild.concat(pluginsCommon);
@@ -48,14 +41,8 @@ module.exports = {
     context: path.resolve(__dirname, './src'),
     entry: './index.js',
     output: {
-        path: path.resolve(__dirname, './dist'),
+        path: path.resolve(__dirname, './dist/'),
         filename: 'js/bundle.js',
-        publicPath: isProd ? './' : '/',
-    },
-    devServer: {
-        contentBase: path.resolve(__dirname, './dist'),
-        watchContentBase: true,
-        publicPath: isProd ? './' : '/',
     },
 
     module: {
@@ -73,7 +60,11 @@ module.exports = {
             {
                 test: /\.(sass|scss|css)$/,
                 use: ExtractTextPlugin.extract({
-                    use: styles
+                    use: [
+                        'css-loader',
+                        'postcss-loader',
+                        'sass-loader',
+                    ]
                 })
             },
 
