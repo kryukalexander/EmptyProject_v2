@@ -5,3 +5,9 @@ body {
     height: $body-h;
     color: $body-col;
 }
+
+svg {
+    &, > * {
+        fill: currentColor;
+    }
+}
