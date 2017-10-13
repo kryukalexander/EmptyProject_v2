@@ -88,25 +88,31 @@ module.exports = {
             },
 
             {
-                test: /\.(jpe?g|png|gif)$/i,
+                test: /\.svg$/,
+                include: path.resolve('./src/icons-svg'),
                 use: [
-                    'url-loader?limit=1500&name=[path][name].[ext]',
-                    'img-loader'
+                    {
+                        loader: 'svg-sprite-loader', options: {} },
+                    {
+                        loader: 'img-loader',
+                        options: {
+                            svgo: {
+                                plugins: [
+                                    { removeAttrs: { attrs: '(fill|stroke)' } }
+                                ],
+                            },
+
+                        },
+                    },
                 ]
             },
 
             {
-                test: /\.svg$/,
+                test: /\.(jpe?g|png|gif|svg)$/i,
+                include: path.resolve('./src/img'),
                 use: [
-                    { loader: 'svg-sprite-loader', options: {} },
-                    {
-                        loader: 'svgo-loader',
-                        options: {
-                            plugins: [
-                                { removeAttrs: { attrs: '(fill|stroke)' } }
-                            ],
-                        },
-                    },
+                    'url-loader?limit=1500&name=[path][name].[ext]',
+                    'img-loader'
                 ]
             }
 
