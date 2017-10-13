@@ -5,6 +5,7 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const SpritePlugin = require('svg-sprite-loader/plugin');
 
 // Settings
 const styles = [
@@ -29,6 +30,7 @@ let pluginsCommon = [
         template: 'templates/index.' + tmpLang,
         inject: true,
     }),
+    new SpritePlugin()
 ];
 
 let pluginsBuild = [
@@ -48,12 +50,12 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, './dist'),
         filename: 'js/bundle.js',
-        publicPath: '/',
+        publicPath: isProd ? './' : '/',
     },
     devServer: {
-        contentBase: path.resolve(__dirname, './dist/'),
+        contentBase: path.resolve(__dirname, './dist'),
         watchContentBase: true,
-        publicPath: '/',
+        publicPath: isProd ? './' : '/',
     },
 
     module: {
@@ -86,12 +88,27 @@ module.exports = {
             },
 
             {
-                test: /\.(jpe?g|png|gif|svg)$/i,
+                test: /\.(jpe?g|png|gif)$/i,
                 use: [
                     'url-loader?limit=1500&name=[path][name].[ext]',
                     'img-loader'
                 ]
             },
+
+            {
+                test: /\.svg$/,
+                use: [
+                    { loader: 'svg-sprite-loader', options: {} },
+                    {
+                        loader: 'svgo-loader',
+                        options: {
+                            plugins: [
+                                { removeAttrs: { attrs: '(fill|stroke)' } }
+                            ],
+                        },
+                    },
+                ]
+            }
 
         ],
     },
