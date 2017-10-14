@@ -18,7 +18,7 @@ let cleanOptions = {
 const tmpLang = 'pug';
 
 let pluginsCommon = [
-    new ExtractTextPlugin('styles.css'),
+    new ExtractTextPlugin('css/styles.css'),
     new HtmlWebpackPlugin({
         template: 'templates/index.' + tmpLang,
         inject: true,
