@@ -5,15 +5,9 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const SpritePlugin = require('svg-sprite-loader/plugin');
 
 // Settings
-const styles = [
-    'css-loader',
-    'postcss-loader',
-    'sass-loader',
-];
-
-let pathsToClean = [ 'dist' ];
 
 let cleanOptions = {
     root:    __dirname,
@@ -24,15 +18,16 @@ let cleanOptions = {
 const tmpLang = 'pug';
 
 let pluginsCommon = [
-    new ExtractTextPlugin('css/styles.css'),
+    new ExtractTextPlugin('css/style.css'),
     new HtmlWebpackPlugin({
         template: 'templates/index.' + tmpLang,
         inject: true,
     }),
+    new SpritePlugin()
 ];
 
 let pluginsBuild = [
-    new CleanWebpackPlugin(pathsToClean, cleanOptions),
+    new CleanWebpackPlugin([ 'dist' ], cleanOptions),
 ];
 
 pluginsBuild = pluginsBuild.concat(pluginsCommon);
@@ -46,14 +41,8 @@ module.exports = {
     context: path.resolve(__dirname, './src'),
     entry: './index.js',
     output: {
-        path: path.resolve(__dirname, './dist'),
+        path: path.resolve(__dirname, './dist/'),
         filename: 'js/bundle.js',
-        publicPath: '/',
-    },
-    devServer: {
-        contentBase: path.resolve(__dirname, './dist/'),
-        watchContentBase: true,
-        publicPath: '/',
     },
 
     module: {
@@ -71,7 +60,11 @@ module.exports = {
             {
                 test: /\.(sass|scss|css)$/,
                 use: ExtractTextPlugin.extract({
-                    use: styles
+                    use: [
+                        'css-loader',
+                        'postcss-loader',
+                        'sass-loader',
+                    ]
                 })
             },
 
@@ -86,12 +79,33 @@ module.exports = {
             },
 
             {
+                test: /\.svg$/,
+                include: path.resolve('./src/icons-svg'),
+                use: [
+                    {
+                        loader: 'svg-sprite-loader', options: {} },
+                    {
+                        loader: 'img-loader',
+                        options: {
+                            svgo: {
+                                plugins: [
+                                    { removeAttrs: { attrs: '(fill|stroke)' } }
+                                ],
+                            },
+
+                        },
+                    },
+                ]
+            },
+
+            {
                 test: /\.(jpe?g|png|gif|svg)$/i,
+                include: path.resolve('./src/img'),
                 use: [
                     'url-loader?limit=1500&name=[path][name].[ext]',
                     'img-loader'
                 ]
-            },
+            }
 
         ],
     },
