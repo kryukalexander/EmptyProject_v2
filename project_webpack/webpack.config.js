@@ -1,3 +1,6 @@
+// todo split config or something
+// https://github.com/LEanongithub/simple-boilerplate/blob/master/config/dev.js
+
 'use strict';
 // Imports
 const path = require('path');

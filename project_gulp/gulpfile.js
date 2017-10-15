@@ -17,6 +17,8 @@ const ENV = process.env.npm_lifecycle_event;
 const root = 'src/';
 const build = 'build/';
 
+// todo simplify gulpfile, espicially js part
+// todo Refactor this
 const dirs = {
 
     styles: {
