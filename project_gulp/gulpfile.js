@@ -11,15 +11,10 @@ const pngquant = require('imagemin-pngquant');
 const del = require('del');
 const concat = require('gulp-concat');
 
-//Setup
-const ENV = process.env.npm_lifecycle_event;
-
 const root = 'src/';
 const build = 'build/';
 
-// todo simplify gulpfile, espicially js part
-// todo Refactor this
-const dirs = {
+const folders = {
 
     styles: {
         dev: root + 'scss/**/*.scss',
@@ -37,43 +32,44 @@ const dirs = {
         build: build + 'js'
     },
 
-    images: root + 'images/**/*',
-    fonts: root + 'fonts/**/*',
+    images: {
+        dev: root + 'images/**/*',
+        build: build + 'images',
+    },
 
-
-    build: {
-        images: build + 'images/',
-        fonts: build + 'fonts/'
+    fonts: {
+        dev: root + 'fonts/**/*',
+        build: build + 'fonts'
     }
 };
 
 //CSS
 gulp.task('css', () => {
-    return gulp.src(dirs.styles.dev)
+    return gulp.src(folders.styles.dev)
         .pipe(sass.sync().on('error',  sass.logError))
         .pipe(postcss())
-        .pipe(gulp.dest(dirs.styles.build));
+        .pipe(gulp.dest(folders.styles.build));
 });
 
 //JS
 gulp.task('js', () => {
-    let scripts = require('./scriptOrder.json');
-    return gulp.src(scripts.files)
+    let scripts = folders.js.dev;
+    return gulp.src(scripts)
         .pipe(concat('script.js'))
         .pipe(uglify())
-        .pipe(gulp.dest(dirs.js.build));
+        .pipe(gulp.dest(folders.js.build));
 });
 
 //HTML
 gulp.task('html', () => {
-        return gulp.src(dirs.html.root)
+        return gulp.src(folders.html.root)
             .pipe(preprocess())
-            .pipe(gulp.dest(dirs.html.build));
+            .pipe(gulp.dest(folders.html.build));
 });
 
 //Images
 gulp.task('build:images', ['css'], () => {
-    gulp.src(dirs.images)
+    gulp.src(folders.images.dev)
 
         .pipe(imagemin({
             interlaced: true,
@@ -82,14 +78,14 @@ gulp.task('build:images', ['css'], () => {
             use: [pngquant()]
         }))
 
-        .pipe(gulp.dest(dirs.build.images));
+        .pipe(gulp.dest(folders.images.build));
 });
 
 //Browser sync
 gulp.task('browser-sync', () => {
     browserSync({
         server: {
-            baseDir: './build'
+            baseDir: build
 
             //for all directory view
             , directory: true
@@ -100,11 +96,10 @@ gulp.task('browser-sync', () => {
 });
 
 //Watch
-gulp.task('watch', ['clean', 'html', 'js', 'build:images', 'browser-sync'], () => {
-    gulp.watch(dirs.styles.dev, ['css', browserSync.reload]);
-    gulp.watch(dirs.js.dev, ['js', browserSync.reload]);
-    gulp.watch(dirs.html.dev, ['html', browserSync.reload]);
-    gulp.watch('./scriptOrder.json', ['js', browserSync.reload]);
+gulp.task('watch', ['build:all', 'browser-sync'], () => {
+    gulp.watch(folders.styles.dev, ['css', browserSync.reload]);
+    gulp.watch(folders.js.dev, ['js', browserSync.reload]);
+    gulp.watch(folders.html.dev, ['html', browserSync.reload]);
 });
 
 //Clean
@@ -115,6 +110,6 @@ gulp.task('clean', () => {
 });
 
 //Build
-gulp.task('build:all', ['clean', 'html', 'build:images'], () => {
-    gulp.src(dirs.fonts).pipe(gulp.dest(dirs.build.fonts));
+gulp.task('build:all', ['clean', 'html', 'js', 'build:images', ], () => {
+    gulp.src(folders.fonts.dev).pipe(gulp.dest(folders.fonts.build));
 });
