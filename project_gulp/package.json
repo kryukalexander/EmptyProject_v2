@@ -32,5 +32,12 @@
   },
   "dependencies": {
     "normalize.css": "^7.0.0"
-  }
+  },
+
+  "browserslist": [
+    "last 25 versions",
+    "> 1%",
+    "ie 8",
+    "ie 7"
+  ]
 }
