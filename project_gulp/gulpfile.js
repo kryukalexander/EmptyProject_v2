@@ -14,6 +14,7 @@ const concat = require('gulp-concat');
 const root = 'src/';
 const build = 'build/';
 
+//todo images folder structure
 const folders = {
 
     styles: {
