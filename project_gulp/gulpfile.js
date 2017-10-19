@@ -111,6 +111,6 @@ gulp.task('clean', () => {
 });
 
 //Build
-gulp.task('build:all', ['clean', 'html', 'js', 'build:images', ], () => {
+gulp.task('build:all', ['clean', 'html', 'js', 'build:images'], () => {
     gulp.src(folders.fonts.dev).pipe(gulp.dest(folders.fonts.build));
 });
