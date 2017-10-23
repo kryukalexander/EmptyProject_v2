@@ -36,7 +36,7 @@ module.exports = [
 
     {
         test: /\.svg$/,
-        include: path.resolve('src/icons-svg'),
+        include: path.resolve('src', 'icons-svg'),
         use: [
             {
                 loader: 'svg-sprite-loader', options: {} },
@@ -56,7 +56,7 @@ module.exports = [
 
     {
         test: /\.(jpe?g|png|gif|svg)$/i,
-        include: path.resolve('./src/images'),
+        include: path.resolve('src', 'images'),
         use: [
             'url-loader?limit=1500&name=[path][name].[ext]',
             'img-loader'
