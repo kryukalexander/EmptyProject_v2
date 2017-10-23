@@ -3,6 +3,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const SpritePlugin = require('svg-sprite-loader/plugin');
+const patch = require('path');
 
 
 module.exports = [
@@ -12,11 +13,5 @@ module.exports = [
         inject: true,
     }),
     new SpritePlugin(),
-    new CleanWebpackPlugin(
-        [ 'dist' ],
-        {
-            root: __dirname,
-            verbose:  true,
-            dry: false}
-    )
+    new CleanWebpackPlugin( [ patch.resolve('dist') ], { allowExternal: true })
 ];
