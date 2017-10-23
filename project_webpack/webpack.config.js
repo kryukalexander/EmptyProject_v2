@@ -7,10 +7,10 @@ const loaders = require('./config/loaders');
 
 // Config
 module.exports = {
-    context: path.resolve(__dirname, './src'),
+    context: path.resolve(__dirname, 'src'),
     entry: './index.js',
     output: {
-        path: path.resolve(__dirname, './dist/'),
+        path: path.resolve(__dirname, 'dist'),
         filename: 'js/bundle.js',
     },
 
