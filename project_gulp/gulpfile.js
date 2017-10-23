@@ -45,6 +45,7 @@ const folders = {
 };
 
 //CSS
+// todo dev sourcemaps
 gulp.task('css', () => {
     return gulp.src(folders.styles.dev)
         .pipe(sass.sync().on('error',  sass.logError))
