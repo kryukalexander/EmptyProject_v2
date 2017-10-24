@@ -1,5 +1,3 @@
-const ENV = process.env.npm_lifecycle_event;
-
 module.exports = {
     plugins: {
         'postcss-import': {},
@@ -19,6 +17,6 @@ module.exports = {
             }
         },
         'postcss-inline-svg': {},
-        'cssnano' : ENV === 'build' ? {} : false,
+        'cssnano' : {}
     }
 };
