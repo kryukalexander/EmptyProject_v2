@@ -16,3 +16,11 @@ svg {
     width: 1.25em;
     height: 1em;
 }
+
+#test {
+    height: 100px;
+    width: 100px;
+    background-size: contain;
+    background-position: center;
+    background-image: url('../images/test.svg');
+}
