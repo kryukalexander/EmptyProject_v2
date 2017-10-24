@@ -2,6 +2,6 @@ import 'normalize.css';
 import './css/style.scss';
 import './js/main';
 
-import twitterSymbol from './icons-svg/twitter.svg';
-import redditSymbol from './icons-svg/reddit.svg';
+import twitterSymbol from './images/icons-svg/twitter.svg';
+import redditSymbol from './images/icons-svg/reddit.svg';
 
