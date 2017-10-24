@@ -15,7 +15,6 @@ const concat = require('gulp-concat');
 const root = 'src/';
 const build = 'build/';
 
-//todo images folder structure
 const folders = {
 
     styles: {
@@ -24,9 +23,9 @@ const folders = {
     },
 
     html: {
-        root: root + '*.html',
         dev: root + '/**/*.html',
         build: build,
+        ignore: '!' + root + '/include/*'
     },
 
     js: {
@@ -37,6 +36,12 @@ const folders = {
     images: {
         dev: root + 'images/**/*',
         build: build + 'images',
+        ignore: [
+            '!' + root + 'images/images-sprite/*',
+            '!' + root + 'images/images-vector/*',
+            '!' + root + 'images/images-sprite/',
+            '!' + root + 'images/images-vector/',
+        ]
     },
 
     fonts: {
@@ -51,14 +56,14 @@ gulp.task('css', () => {
 
     if (isProd) {
         return gulp.src(folders.styles.dev)
-            .pipe(sass.sync().on('error',  sass.logError))
+            .pipe(sass.sync().on('error', sass.logError))
             .pipe(postcss())
             .pipe(gulp.dest(folders.styles.build));
     } else {
 
         return gulp.src(folders.styles.dev)
             .pipe(sourcemaps.init())
-            .pipe(sass.sync().on('error',  sass.logError))
+            .pipe(sass.sync().on('error', sass.logError))
             .pipe(postcss())
             .pipe(sourcemaps.write('./maps'))
             .pipe(gulp.dest(folders.styles.build));
@@ -76,14 +81,14 @@ gulp.task('js', () => {
 
 //HTML
 gulp.task('html', () => {
-        return gulp.src(folders.html.root)
+        return gulp.src( [folders.html.dev, folders.html.ignore] )
             .pipe(preprocess())
             .pipe(gulp.dest(folders.html.build));
 });
 
 //Images
 gulp.task('build:images', ['css'], () => {
-    gulp.src(folders.images.dev)
+    gulp.src( [folders.images.dev, ...folders.images.ignore] )
 
         .pipe(imagemin({
             interlaced: true,
