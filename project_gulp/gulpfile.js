@@ -3,6 +3,7 @@
 const gulp = require('gulp');
 const sass = require('gulp-sass');
 const postcss = require('gulp-postcss');
+const sourcemaps = require('gulp-sourcemaps');
 const browserSync = require('browser-sync');
 const preprocess = require('gulp-preprocess');
 const uglify = require('gulp-uglify');
@@ -45,12 +46,23 @@ const folders = {
 };
 
 //CSS
-// todo dev sourcemaps
 gulp.task('css', () => {
-    return gulp.src(folders.styles.dev)
-        .pipe(sass.sync().on('error',  sass.logError))
-        .pipe(postcss())
-        .pipe(gulp.dest(folders.styles.build));
+    let isProd = process.env.npm_lifecycle_event === 'build';
+
+    if (isProd) {
+        return gulp.src(folders.styles.dev)
+            .pipe(sass.sync().on('error',  sass.logError))
+            .pipe(postcss())
+            .pipe(gulp.dest(folders.styles.build));
+    } else {
+
+        return gulp.src(folders.styles.dev)
+            .pipe(sourcemaps.init())
+            .pipe(sass.sync().on('error',  sass.logError))
+            .pipe(postcss())
+            .pipe(sourcemaps.write('./maps'))
+            .pipe(gulp.dest(folders.styles.build));
+    }
 });
 
 //JS

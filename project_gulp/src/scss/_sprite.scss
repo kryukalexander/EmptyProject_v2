@@ -1,0 +1,28 @@
+.sprite {
+    height: 32px;
+    width: 32px;
+    display: inline-block;
+    margin-right: 10px;
+    transition-duration: .25s;
+
+
+    &.tube {
+        background: url('../images-sprite/youtube.png') at-2x;
+    }
+
+    &.cloud {
+        background: url('../images-sprite/cloud.png') at-2x;
+    }
+
+    &.reddit {
+        background: url('../images-sprite/reddit.png') at-2x;
+    }
+
+    &.arrow-down {
+        background: svg-load('../images-vector/down-chevron.svg', fill=red);
+
+        &:hover {
+            background: svg-load('../images-vector/down-chevron.svg', fill=blue);
+        }
+    }
+}
