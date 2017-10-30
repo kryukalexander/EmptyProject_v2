@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const SpriteLoaderPlugin = require('svg-sprite-loader/plugin');
 
 module.exports = [
 
@@ -40,7 +41,8 @@ module.exports = [
         include: path.resolve('src', 'images', 'icons-svg'),
         use: [
             {
-                loader: 'svg-sprite-loader', options: {} },
+                loader: 'svg-sprite-loader',
+                options: { spriteFilename: 'images/sprite.svg' } },
             {
                 loader: 'img-loader',
                 options: {
