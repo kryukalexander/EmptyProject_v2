@@ -1,7 +1,5 @@
 const path = require('path');
-const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const SpriteLoaderPlugin = require('svg-sprite-loader/plugin');
 
 module.exports = [
 
