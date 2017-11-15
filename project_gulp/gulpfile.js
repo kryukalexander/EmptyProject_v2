@@ -5,7 +5,8 @@ const sass = require('gulp-sass');
 const postcss = require('gulp-postcss');
 const sourcemaps = require('gulp-sourcemaps');
 const browserSync = require('browser-sync');
-const preprocess = require('gulp-preprocess');
+// const preprocess = require('gulp-preprocess');
+const fileinclude = require('gulp-file-include');
 const uglify = require('gulp-uglify');
 const imagemin = require('gulp-imagemin');
 const pngquant = require('imagemin-pngquant');
@@ -82,7 +83,10 @@ gulp.task('js', () => {
 //HTML
 gulp.task('html', () => {
         return gulp.src( [folders.html.dev, folders.html.ignore] )
-            .pipe(preprocess())
+            .pipe(fileinclude({
+                prefix: '@@',
+                basepath: '@file'
+            }))
             .pipe(gulp.dest(folders.html.build));
 });
 
