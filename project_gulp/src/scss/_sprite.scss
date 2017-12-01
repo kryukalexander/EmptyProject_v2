@@ -1,28 +1,24 @@
+$sprite-list : (
+    tube: $sprite + 'youtube.png',
+    cloud: $sprite + 'cloud.png',
+    reddit : $sprite + 'reddit.png',
+    australia: $sprite + 'australian-continent.png',
+);
+
+@mixin SpriteImage ($image) {
+    height: height($image);
+    width: width($image);
+    background: url($image) at-2x;
+}
+
 .sprite {
-    height: 32px;
-    width: 32px;
     display: inline-block;
-    margin-right: 10px;
-    transition-duration: .25s;
+    margin-right: 0.5em;
+    margin-left: 0.5em;
 
-
-    &.tube {
-        background: url('../images/images-sprite/youtube.png') at-2x;
-    }
-
-    &.cloud {
-        background: url('../images/images-sprite/cloud.png') at-2x;
-    }
-
-    &.reddit {
-        background: url('../images/images-sprite/reddit.png') at-2x;
-    }
-
-    &.arrow-down {
-        background: svg-load('../images/images-vector/down-chevron.svg', fill=red);
-
-        &:hover {
-            background: svg-load('../images/images-vector/down-chevron.svg', fill=blue);
+    @each $class, $image in $sprite-list {
+        &-#{$class} {
+            @include SpriteImage($image);
         }
     }
 }
