@@ -3,6 +3,7 @@ module.exports = {
         'postcss-import': {},
         'autoprefixer': {},
         'postcss-flexbugs-fixes' : {},
+        'postcss-assets': {},
         'postcss-at2x' : {
             skipMissingRetina: true
         },
