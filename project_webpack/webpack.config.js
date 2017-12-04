@@ -22,5 +22,10 @@ module.exports = {
         rules: loaders,
     },
 
-    plugins: plugins
+    plugins: plugins,
+
+    devServer: {
+        inline: true,
+        open: true,
+    }
 };
