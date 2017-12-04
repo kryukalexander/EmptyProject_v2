@@ -23,9 +23,4 @@ module.exports = {
     },
 
     plugins: plugins,
-
-    devServer: {
-        inline: true,
-        open: true,
-    }
 };
