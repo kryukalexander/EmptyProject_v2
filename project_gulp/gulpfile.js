@@ -25,7 +25,10 @@ const folders = {
     html: {
         dev: root + '/**/*.html',
         build: build,
-        ignore: '!' + root + '/include/*'
+        ignore: [
+            '!' + root + '/include/**/',
+            '!' + root + '/include/**/*.html'
+        ]
     },
 
     js: {
@@ -81,7 +84,7 @@ gulp.task('js', () => {
 
 //HTML
 gulp.task('html', () => {
-        return gulp.src( [folders.html.dev, folders.html.ignore] )
+        return gulp.src( [folders.html.dev, ...folders.html.ignore] )
             .pipe(fileinclude({
                 prefix: '@@',
                 basepath: '@file'
