@@ -1,24 +1,16 @@
-$sprite-list : (
-    tube: $sprite + 'youtube.png',
-    cloud: $sprite + 'cloud.png',
-    reddit : $sprite + 'reddit.png',
-    australia: $sprite + 'australian-continent.png',
-);
+$sprite-list: ('youtube', 'cloud', 'reddit', 'australia');
 
-@mixin SpriteImage ($image) {
-    height: height($image);
-    width: width($image);
-    background: url($image) at-2x;
+@mixin SpriteImage ($image, $path: $sprite, $extension: '.png') {
+    height: height($path + $image + $extension);
+    width: width($path + $image + $extension);
+    background: url($path + $image + $extension) at-2x;
 }
 
 .sprite {
     display: inline-block;
-    margin-right: 0.5em;
-    margin-left: 0.5em;
+    margin: 0 0.25em;
 
-    @each $class, $image in $sprite-list {
-        &-#{$class} {
-            @include SpriteImage($image);
-        }
+    @each $image in $sprite-list {
+        &-#{$image} { @include SpriteImage($image); }
     }
 }
