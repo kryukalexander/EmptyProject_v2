@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-@@include('./include/_head.html', {"title" : "Index"})
+<scope with="index">
+    <include src="./src/include/_head.html"></include>
+</scope>
 <body>
-    <h1>Body</h1>
-    <p>Some body text</p>
+    <h1>{{title}}</h1>
+    <p>{{subtitle}}</p>
     <p>
-        @@include('include/demo/_sprite-test.html')
+       <include src="./src/include/demo/_sprite-test.html"></include>
     </p>
     <p>
-        @@include('include/demo/_icon-test.html')
+        <include src="./src/include/demo/_icon-test.html"></include>
     </p>
 
 
