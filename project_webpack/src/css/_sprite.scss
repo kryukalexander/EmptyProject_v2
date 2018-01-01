@@ -1,10 +1,15 @@
 $sprite: '../images/images-sprite/';
+$retina-sprites: false;
+
 $sprite-list: ('youtube', 'cloud', 'reddit', 'australia');
 
 @mixin SpriteImage ($image, $path: $sprite, $extension: '.png') {
     height: height($path + $image + $extension);
     width: width($path + $image + $extension);
-    background: url($path + $image + $extension) at-2x;
+
+    @if $retina-sprites {  background: url($path + $image + $extension) at-2x; }
+    @else { background: url($path + $image + $extension); }
+
 }
 
 .sprite {
