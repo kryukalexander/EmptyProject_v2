@@ -4,11 +4,9 @@ module.exports = {
         'autoprefixer': {},
         'postcss-flexbugs-fixes' : {},
         'postcss-assets': {},
-        'postcss-at2x' : {
-            skipMissingRetina: true
-        },
+        'postcss-at2x' : {},
         'postcss-sprites': {
-            retina: true,
+            retina: false,
             spritePath: 'src/images/',
             filterBy: (image) => {
                 if (!/\/images-sprite\//.test(image.url)) {

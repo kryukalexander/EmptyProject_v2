@@ -2,3 +2,5 @@
 node_modules
 dist
 npm-debug.log
+src/images/sprite.@2x.png
+src/images/sprite.png
