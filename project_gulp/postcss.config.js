@@ -9,6 +9,9 @@ module.exports = {
         },
         'postcss-sprites': {
             retina: false,
+            spritesmith: {
+                padding: 10
+            },
             spritePath: 'src/images/',
             filterBy: (image) => {
                 if (!/\/images-sprite\//.test(image.url)) {
