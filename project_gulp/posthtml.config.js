@@ -1,11 +1,7 @@
 let locals = {
     locals: {
-        index: {
-            title: 'Index'
-        },
-
-        title: 'Body',
-        subtitle: 'Some body text'
+        title: 'Demo title',
+        subtitle: 'Demo subtitle'
     }
 };
 
@@ -13,5 +9,6 @@ let locals = {
 module.exports = {
     plugins: [
         require('posthtml-include')({}),
-        require('posthtml-expressions')(locals)]
+        require('posthtml-expressions')(locals)
+    ]
 };
