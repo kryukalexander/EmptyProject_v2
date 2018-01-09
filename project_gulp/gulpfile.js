@@ -84,11 +84,8 @@ gulp.task('js', () => {
 
 //HTML
 gulp.task('html', () => {
-    const plugins = [ require('posthtml-include')({}), require('posthtml-expressions')(require('./src/posthtml-locals'))];
-    const options = {};
-
     return gulp.src( [folders.html.dev, ...folders.html.ignore] )
-        .pipe(posthtml(plugins, options))
+        .pipe(posthtml())
         .pipe(gulp.dest(folders.html.build));
 });
 
@@ -125,7 +122,7 @@ gulp.task('watch', ['build:all', 'browser-sync'], () => {
     gulp.watch(folders.styles.dev, ['css', browserSync.reload]);
     gulp.watch(folders.js.dev, ['js', browserSync.reload]);
     gulp.watch(folders.html.dev, ['html', browserSync.reload]);
-    gulp.watch('./src/posthtml-locals.js', ['html', browserSync.reload]);
+    gulp.watch('./posthtml.config.js', ['html', browserSync.reload]);
 });
 
 //Clean

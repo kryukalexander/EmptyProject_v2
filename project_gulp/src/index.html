@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<each loop="title in  ['Index']">
+<each loop="title in ['Index']">
     <include src="./src/include/_head.html"></include>
 </each>
 <body>
@@ -12,10 +12,6 @@
     <p>
         <include src="./src/include/demo/_icon-test.html"></include>
     </p>
-
-    <each loop="item in [{ name: 'A', code: 'red'}, {name: 'B', code: 'blur'}]">
-        <include src="./src/include/demo/_test.html"></include>
-    </each>
 
 
     <script src="js/script.js"></script>
