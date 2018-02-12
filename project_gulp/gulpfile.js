@@ -5,15 +5,15 @@ const sass = require('gulp-sass');
 const postcss = require('gulp-postcss');
 const sourcemaps = require('gulp-sourcemaps');
 const browserSync = require('browser-sync');
-const fileinclude = require('gulp-file-include');
+const posthtml = require('gulp-posthtml');
 const uglify = require('gulp-uglify');
 const imagemin = require('gulp-imagemin');
 const pngquant = require('imagemin-pngquant');
 const del = require('del');
 const concat = require('gulp-concat');
 
-const root = 'src/';
-const build = 'build/';
+const root = './src/';
+const build = './build/';
 
 const folders = {
 
@@ -23,7 +23,7 @@ const folders = {
     },
 
     html: {
-        dev: root + '/**/*.html',
+        dev: root + '**/*.html',
         build: build,
         ignore: [
             '!' + root + '/include/**/',
@@ -84,12 +84,9 @@ gulp.task('js', () => {
 
 //HTML
 gulp.task('html', () => {
-        return gulp.src( [folders.html.dev, ...folders.html.ignore] )
-            .pipe(fileinclude({
-                prefix: '@@',
-                basepath: '@file'
-            }))
-            .pipe(gulp.dest(folders.html.build));
+    return gulp.src( [folders.html.dev, ...folders.html.ignore] )
+        .pipe(posthtml())
+        .pipe(gulp.dest(folders.html.build));
 });
 
 //Images
@@ -125,6 +122,7 @@ gulp.task('watch', ['build:all', 'browser-sync'], () => {
     gulp.watch(folders.styles.dev, ['css', browserSync.reload]);
     gulp.watch(folders.js.dev, ['js', browserSync.reload]);
     gulp.watch(folders.html.dev, ['html', browserSync.reload]);
+    gulp.watch('./posthtml.config.js', ['html', browserSync.reload]);
 });
 
 //Clean

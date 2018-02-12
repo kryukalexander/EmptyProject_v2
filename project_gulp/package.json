@@ -21,6 +21,7 @@
     "gulp-file-include": "^1.2.0",
     "gulp-imagemin": "^3.3.0",
     "gulp-postcss": "^7.0.0",
+    "gulp-posthtml": "^3.0.2",
     "gulp-sass": "^3.1.0",
     "gulp-sourcemaps": "^2.6.1",
     "gulp-uglify": "^3.0.0",
@@ -30,9 +31,13 @@
     "postcss-flexbugs-fixes": "^3.2.0",
     "postcss-import": "^10.0.0",
     "postcss-inline-svg": "^3.0.0",
-    "postcss-sprites": "^4.2.1"
+    "postcss-sprites": "^4.2.1",
+    "posthtml": "^0.11.0",
+    "posthtml-expressions": "^1.1.0",
+    "posthtml-include": "^1.1.0"
   },
   "dependencies": {
+    "gulp-tap": "^1.0.1",
     "normalize.css": "^7.0.0"
   },
   "browserslist": [
