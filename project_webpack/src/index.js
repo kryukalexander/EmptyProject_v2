@@ -2,6 +2,6 @@ import 'normalize.css';
 import './css/style.scss';
 import './js/main';
 
-import twitterSymbol from './images/icons-svg/twitter.svg';
-import redditSymbol from './images/icons-svg/reddit.svg';
+let context = require.context("./images/icons-svg/", true, /\.svg$/);
+context.keys().forEach(context);
 
