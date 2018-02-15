@@ -7,9 +7,9 @@ html(lang="en")
     body
         img(src=require('../images/test.jpg'))
         #test
-        svg: use(xlink:href="#reddit")
+        svg: use(xlink:href="./images/sprite.svg#reddit")
         | Reddit
-        svg: use(xlink:href="#twitter")
+        svg: use(xlink:href="./images/sprite.svg#twitter")
         | Twitter
         p Text below was included:
         include includes/_include

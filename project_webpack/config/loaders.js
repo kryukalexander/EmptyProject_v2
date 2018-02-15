@@ -40,7 +40,10 @@ module.exports = [
         use: [
             {
                 loader: 'svg-sprite-loader',
-                options: { spriteFilename: 'images/sprite.svg' } },
+                options: {
+                    extract: true,
+                    spriteFilename: 'images/sprite.svg' }
+                },
             {
                 loader: 'img-loader',
                 options: {
